@@ -12,5 +12,11 @@
     <color name="preview">#2748FF</color>
     <color name="soft">#CCB2F6FF</color>
     <color name="item_background">#5B068507</color>
-    <color name="description_background">#E3EDF8FF</color>
+    <color name="description_background">#FFEB3B</color>
+
+
+
+    <color name="other_description_color">#101010</color>
+    <color name="other_description_background">#FFF281</color>
+
 </resources>

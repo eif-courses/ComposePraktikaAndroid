@@ -17,6 +17,8 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
@@ -90,16 +92,19 @@ fun Greeting(name: String) {
                 .fillMaxSize()
         ) {
 
-            Image( contentScale = ContentScale.Crop,
+            Image(
+                contentScale = ContentScale.Crop,
                 painter = painterResource(
-                id = R.drawable.background),
-                contentDescription = null)
+                    id = R.drawable.background
+                ),
+                contentDescription = null
+            )
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(10.dp)
+                modifier = Modifier
+                    .padding(10.dp)
             ) {
-
 
 
                 Row() {
@@ -111,20 +116,43 @@ fun Greeting(name: String) {
                             modifier = Modifier
                                 .background(color = colorResource(id = R.color.description_background))
                                 .padding(10.dp),
-                            fontSize = 20.sp, fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp, fontWeight = FontWeight.SemiBold,
                         )
 
                     }
                 }
 
+                Row(modifier = Modifier.background(color = colorResource(id = R.color.item_background))) {
+                    IconButton(modifier = Modifier
+                        .size(size), onClick = { /*TODO*/ }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
+                            contentDescription = null,
+                            tint = colorResource(id = R.color.purple_700)
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(172.dp))
+                    IconButton(modifier = Modifier.size(size), onClick = { /*TODO*/ }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.viewmodel),
+                            contentDescription = null,
+                            tint = colorResource(id = R.color.purple_700)
+                        )
+                    }
+                }
 
-                Row(Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically) {
-                    Image(contentScale = ContentScale.Crop,
+
+
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        contentScale = ContentScale.Crop,
                         painter = painterResource(id = R.drawable.oscilografas),
                         contentDescription = null,
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .size(300.dp)
                             .background(colorResource(id = R.color.item_background))
                     )
 
@@ -132,29 +160,16 @@ fun Greeting(name: String) {
                 }
 
 
+
                 Row() {
-                    IconButton(modifier = Modifier.size(size), onClick = { /*TODO*/ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
-                            contentDescription = null,
-                            tint = colorResource(id = R.color.green)
-                        )
-                    }
-                    IconButton(modifier = Modifier.size(size), onClick = { /*TODO*/ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_baseline_stop_64),
-                            contentDescription = null,
-                            tint = colorResource(id = R.color.red)
-                        )
-                    }
-                    IconButton(modifier = Modifier.size(size), onClick = { /*TODO*/ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.viewmodel),
-                            contentDescription = null,
-                            tint = colorResource(id = R.color.preview)
-                        )
-                    }
+                    Image(
+                        painter = painterResource(id = R.drawable.fingers),
+                        contentDescription = null, contentScale = ContentScale.Crop,
+                        modifier = Modifier.size(200.dp, 50.dp)
+                    )
+
                 }
+
 
 
 
@@ -165,11 +180,13 @@ fun Greeting(name: String) {
                             maxLines = 20,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
-                                .background(color = colorResource(id = R.color.white))
-                                .padding(10.dp), fontSize = 16.sp
+                                .background(color = colorResource(id = R.color.other_description_background))
+                                .padding(10.dp), fontSize = 16.sp,fontWeight = FontWeight.W300,
+                            color = colorResource(id = R.color.other_description_color)
                         )
 
                     }
+
                 }
 
 
@@ -189,11 +206,9 @@ fun Greeting(name: String) {
             }
 
 
-
-            }
-
         }
 
+    }
 
 
 //
@@ -205,7 +220,6 @@ fun Greeting(name: String) {
 //
 //
 //        }
-
 
 
 }
