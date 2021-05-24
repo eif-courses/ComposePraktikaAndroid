@@ -3,6 +3,7 @@ package eif.viko.lt.vilniaus.kolegija.elektronikos.myapplication
 import android.content.Intent
 import android.content.res.Resources
 import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -45,6 +46,8 @@ import com.google.accompanist.pager.rememberPagerState
 import eif.viko.lt.vilniaus.kolegija.elektronikos.myapplication.ui.theme.MyApplicationTheme
 import kotlin.math.absoluteValue
 import androidx.core.content.ContextCompat.startActivity
+import com.google.gson.Gson
+import eif.viko.lt.vilniaus.kolegija.elektronikos.myapplication.model.Item
 
 
 class MainActivity : ComponentActivity() {
@@ -54,60 +57,20 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val gson = Gson()
+        val text = resources.openRawResource(R.raw.items).bufferedReader().use { it.readText() }
+        val items: List<Item> = gson.fromJson(text, Array<Item>::class.java).toList()
+
         setContent {
+
             val context = LocalContext.current
+
+
             MyApplicationTheme {
-                Scaffold(
-                    content = { Greeting("Android") },
-                    bottomBar = {
-                        BottomAppBar {
-
-                            IconButton(modifier = Modifier
-                                .width(64.dp)
-                                .height(50.dp), onClick = {
-
-                                val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
-                                val intentUri =
-                                    Uri.parse("https://arvr.google.com/scene-viewer/1.0").buildUpon()
-                                        .appendQueryParameter(
-                                            "file",
-                                            "https://raw.githubusercontent.com/eif-courses/models/main/acer_anywhere_laptop.glb"
-                                        ).build()
-                                sceneViewerIntent.data = intentUri
-                                sceneViewerIntent.setPackage("com.google.ar.core")
-                            }) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
-                                    contentDescription = null,
-                                    tint = colorResource(id = R.color.green)
-                                )
-                            }
-                            IconButton(modifier = Modifier
-                                .width(64.dp)
-                                .height(50.dp), onClick = {
-
-                                val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
-                                val intentUri =
-                                    Uri.parse("https://arvr.google.com/scene-viewer/1.0").buildUpon()
-                                        .appendQueryParameter(
-                                            "file",
-                                            "https://raw.githubusercontent.com/eif-courses/models/main/acer_anywhere_laptop.glb"
-                                        ).build()
-                                sceneViewerIntent.data = intentUri
-                                sceneViewerIntent.setPackage("com.google.ar.core")
-                                context.startActivity(sceneViewerIntent)
-
-                            }) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.vaizdoperziura),
-                                    contentDescription = null,
-                                    tint = colorResource(id = R.color.black)
-                                )
-                            }
-                        }
-                    })
+                DisplayMuseumItems(items)
             }
         }
+
     }
 }
 
@@ -130,46 +93,24 @@ class MainActivity : ComponentActivity() {
 
 @ExperimentalPagerApi
 @Composable
-fun Greeting(name: String) {
-
+fun DisplayMuseumItems(museumItems: List<Item>) {
 
     val context = LocalContext.current
-    val temp = listOf(
-        "Labas",
-        "Krabas",
-        "BNabas",
-        "Labas",
-        "Krabas",
-        "BNabas",
-        "Labas",
-        "Krabas",
-        "BNabas",
-        "Labas",
-        "Krabas",
-        "BNabas",
-        "Labas",
-        "Krabas",
-        "BNabas",
-        "Labas",
-        "Krabas",
-        "BNabas",
-        "Labas",
-        "Krabas",
-        "BNabas"
-    )
 
 
     val size = 64.dp
 
     // Display 10 items
-    val pagerState = rememberPagerState(pageCount = temp.size)
+
+
+    val pagerState = rememberPagerState(pageCount = museumItems.size)
 
     HorizontalPager(state = pagerState, itemSpacing = 10.dp) { page ->
         // Our page content
         Card(
 
             elevation = 4.dp, modifier = Modifier
-                .fillMaxHeight(0.93f)
+                .fillMaxHeight()
                 .fillMaxWidth()
         ) {
 
@@ -193,13 +134,15 @@ fun Greeting(name: String) {
 
                     DisableSelection {
                         Text(
-                            "Dviejų diapazonų ampermetras TSRS 1967 m.",
+                            museumItems[page].title,
                             maxLines = 20,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
-                                .background(color = colorResource(id = R.color.description_background))
+                                .background(color = MaterialTheme.colors.primary)
                                 .padding(10.dp),
-                            fontSize = 20.sp, fontWeight = FontWeight.SemiBold,
+                            fontSize = 20.sp, fontWeight = FontWeight.W300, color = colorResource(
+                                id = R.color.purple_700
+                            )
                         )
 
                     }
@@ -212,7 +155,13 @@ fun Greeting(name: String) {
 
                     Image(
                         contentScale = ContentScale.Crop,
-                        painter = painterResource(id = R.drawable.oscilografas),
+                        painter = painterResource(
+                            id = context.resources.getIdentifier(
+                                museumItems[page].poster.substringBefore(
+                                    '.'
+                                ), "drawable", context.packageName
+                            )
+                        ),
                         contentDescription = "3D",
                         modifier = Modifier
                             .size(300.dp)
@@ -240,31 +189,98 @@ fun Greeting(name: String) {
                 Row() {
                     DisableSelection {
                         Text(
-                            "Dviejų diapazonų ampermetras TSRS 1967 m. Padidinto tikslumo dviejų diapozonų rodiklinis fiksuotos ritės - judančio magneto ampermetras skirtas matuoti nuolatinę ir kintamą srovę. Matavimo skalės: 0-2.5 ampero ir 0-5 voltai. Kintamos srovės dažnis 45 - 1500Hz. Matavimo paklaidos visuose diapazonuose 0.5%.",
+                            museumItems[page].description,
                             maxLines = 20,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
                                 .background(color = colorResource(id = R.color.other_description_background))
-                                .padding(10.dp), fontSize = 16.sp, fontWeight = FontWeight.W300,
+                                .padding(10.dp),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.W300,
                             color = colorResource(id = R.color.other_description_color)
                         )
 
                     }
 
                 }
+                Divider(
+                    modifier = Modifier
+                        .size(2.dp)
+                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    BottomAppBar {
+
+                        Button(
+                            modifier = Modifier
+                                .width(120.dp)
+                                .height(70.dp), onClick = {
 
 
+                                //val url = "https://eif-muziejus.lt/audio_ru/oscilografas.wav"
+                                val url = "https://raw.githubusercontent.com/eif-courses/modelsausdio/main/EN/${museumItems[page].audio}"
+                                ///"http://........" // your URL here
+
+                                println(url)
 
 
-                Row() {
-                    Text(
-                        text = "${page + 1} / ${temp.size}",
-                        maxLines = 20,
-                        fontSize = 30.sp,
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.Bold,
-                        color = colorResource(id = R.color.white)
-                    )
+                                val mediaPlayer: MediaPlayer = MediaPlayer().apply {
+                                    setAudioAttributes(
+                                        AudioAttributes.Builder()
+                                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                                            .build()
+                                    )
+                                    setDataSource(url)
+                                    prepare() // might take long! (for buffering, etc)
+                                    start()
+                                }
+
+                                    // https://raw.githubusercontent.com/eif-courses/modelsausdio/main/EN/acer_ak_anywhere_en.wav
+
+
+                                }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
+                                    contentDescription = null,
+                                    tint = colorResource(id = R.color.green)
+                                )
+
+                            }
+
+                                Button(modifier = Modifier
+                                    .width(120.dp)
+                                    .height(70.dp), onClick = {
+
+                                    val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
+                                    val intentUri =
+                                        Uri.parse("https://arvr.google.com/scene-viewer/1.0")
+                                            .buildUpon()
+                                            .appendQueryParameter(
+                                                "file",
+                                                "https://raw.githubusercontent.com/eif-courses/models/main/${museumItems[page].model}"
+                                            ).build()
+                                    sceneViewerIntent.data = intentUri
+                                    sceneViewerIntent.setPackage("com.google.ar.core")
+                                    context.startActivity(sceneViewerIntent)
+
+                                }) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.vaizdoperziura),
+                                        contentDescription = null,
+                                        tint = colorResource(id = R.color.black)
+                                    )
+
+                                }
+                                Text(
+                                    text = "Page ${page + 1}/${museumItems.size}",
+                                    modifier = Modifier.padding(start = 30.dp),
+                                    color = Color.Black
+                                )
+
+                            }
+                    }
+
+
                 }
 
 
@@ -272,77 +288,18 @@ fun Greeting(name: String) {
 
 
         }
-
-
     }
 
-
-//
-//    LazyRow() {
-//        items(temp) {
-//        }
-//
-//
-//
-//
-//        }
-
-}
-
-@ExperimentalPagerApi
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    val context = LocalContext.current
-    MyApplicationTheme {
-        Scaffold(
-            content = { Greeting("Android") },
-            bottomBar = {
-                BottomAppBar {
-
-                    IconButton(modifier = Modifier
-                        .width(64.dp)
-                        .height(50.dp), onClick = {
-
-                        val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
-                        val intentUri =
-                            Uri.parse("https://arvr.google.com/scene-viewer/1.0").buildUpon()
-                                .appendQueryParameter(
-                                    "file",
-                                    "https://raw.githubusercontent.com/eif-courses/models/main/acer_anywhere_laptop.glb"
-                                ).build()
-                        sceneViewerIntent.data = intentUri
-                        sceneViewerIntent.setPackage("com.google.ar.core")
-                    }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
-                            contentDescription = null,
-                            tint = colorResource(id = R.color.green)
-                        )
-                    }
-                    IconButton(modifier = Modifier
-                        .width(64.dp)
-                        .height(50.dp), onClick = {
-
-                        val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
-                        val intentUri =
-                            Uri.parse("https://arvr.google.com/scene-viewer/1.0").buildUpon()
-                                .appendQueryParameter(
-                                    "file",
-                                    "https://raw.githubusercontent.com/eif-courses/models/main/acer_anywhere_laptop.glb"
-                                ).build()
-                        sceneViewerIntent.data = intentUri
-                        sceneViewerIntent.setPackage("com.google.ar.core")
-                        context.startActivity(sceneViewerIntent)
-
-                    }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.vaizdoperziura),
-                            contentDescription = null,
-                            tint = colorResource(id = R.color.black)
-                        )
-                    }
-                }
-            })
+    @ExperimentalPagerApi
+    @Preview(showBackground = true)
+    @Composable
+    fun DefaultPreview() {
+        val context = LocalContext.current
+        val gson = Gson()
+        val text =
+            context.resources.openRawResource(R.raw.items).bufferedReader().use { it.readText() }
+        val items: List<Item> = gson.fromJson(text, Array<Item>::class.java).toList()
+        MyApplicationTheme {
+            DisplayMuseumItems(items)
+        }
     }
-}

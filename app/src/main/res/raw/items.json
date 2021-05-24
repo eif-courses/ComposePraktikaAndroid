@@ -1,0 +1,309 @@
+[{
+  "poster": "oscilografas.webp",
+  "audio": "oscilografas_en.wav",
+  "model": "oscilografas.glb",
+  "title": "Oscillograph S1-19A USSR 1972",
+  "description": "Analog - a light bulb oscilograph for testing amplitudes up to 50 volts and up to 1Mhz (megahertz) frequency signals."
+},
+{
+"poster": "aukstavoltis_diodas.webp",
+"audio": "auktavoltis_diodas_en.wav",
+"model": "aukstavoltis_diodas.glb",
+"title": "High-level diode in the USSR 1970",
+"description": "The diode is designed to work in a range of high voltages of more than 500 volts. Used as an ironing element for the formation of electrical circuits. Used in an electrical laboratory."
+},
+{
+"poster": "radijo_lempa_triodas.webp",
+"audio": "radijo_lempa_triodas60kw_en.wav",
+"model": "radijo_lempa_triodas.glb",
+"title": "Radio lamp GU-23A USSR 1987",
+"description": "Radio lamp - triode designed for powerful (up to 60kW) radio transmitters. Cool the lamp with water. Used as a visual tool."
+},
+{
+"poster": "robik_pc.webp",
+"audio": "robik_en.wav",
+"model": "robik_pc.glb",
+"title": "Household computer ROBIK USSR 1987.",
+"description": "Soviet clone of personal computer ZX Spektrum with western 8-bit ST-Z80A microprocessor. The BASIC operating system was booted from a cassertic tape recorder, and the image is displayed on the TV."
+},
+{
+"poster": "detektoriaus_stendas.webp",
+"audio": "detektorinis_maketas1996_en.wav",
+"model": "detektoriaus_stendas3d.glb",
+"title": "Laboratory detector layout Lithuania 1976",
+"description": "The laboratory layout was used during laboratory work in the laboratory of signals and circuits."
+},
+{
+"poster": "egzaminatorius.webp",
+"audio": "elektroninis_egzaminatorius_en.wav",
+"model": "egzaminatorius.glb",
+"title": "Electronic examiner VAEM 1975",
+"description": "The electronic examiner is designed to activate auditors during knowledge verification. The device operates on a logic basis with memory. Designed by ET students using electronic lamps with semiconductor elements. Used in electronics laboratory 1975-1977"
+},
+{
+"poster": "elektronika_bk_36_skaiciuotuvas.webp",
+"audio": "elektronics_bk36_en.wav",
+"model": "elektronika_bk_36_skaiciuotuvas.glb",
+"title": "Calculator Electronics BK 36 USSR 1988",
+"description": "Electronic household calculator base one high-integration microchain K145IP15. The result is represented in the 8-segment indicator of 7 segments."
+},
+{
+"poster": "elektroninis_vamzdis_lozi13.webp",
+"audio": "lozi_lempa_kineskopo_en.wav",
+"model": "elektroninis_vamzdis_lozi13.glb",
+"title": "Electronic tube 13LOZI USSR 1964",
+"description": "Electronic tube - a prototype of a kinescopic with a single electron beam, used in analog oscillographs. Educational tool."
+},
+{
+"poster": "eletronika580.webp",
+"audio": "elektronika580_en.wav",
+"model": "eletronika580.glb",
+"title": "Educational stand Electronics 580 USSR 1989",
+"description": "The microprocessor program tuning stand Electronics 580 is designed to examine the operation of microprocessors and learn how to program assembler language. The device is based on an Intel 8080 microprocessor copy (KPS808M80A). Used in the microprocessor laboratory 1990-2000"
+},
+{
+"poster": "feritine_matrica.webp",
+"audio": "feritine_matrica_en.wav",
+"model": "feritine_matrica.glb",
+"title": "Ferrite memory matrix in the USSR in 1960",
+"description": "A ferrism matrix in which each ferris ring could remember 1 bit. The matrix has a capacity of about 1024 bits. The patent holder IBM, however, was produced worldwide, most commonly found in Japan until 1975."
+},
+{
+"poster": "generatoriusg15.webp",
+"audio": "generatoriusg515_en.wav",
+"model": "generatoriusg15.glb",
+"title": "Televised signal generator GIS 01T USSR 1984",
+"description": "The generator is designed to form a standard black-and-white signal. Applied to the geometry of kinescopic TVs. Used in RTV laboratory."
+},
+{
+"poster": "gradynas_stendas1994.webp",
+"audio": "vaem1994stendas_en.wav",
+"model": "grandynas_stendas_1994.glb",
+"title": "Digital Circuit Stand VAEM 1994",
+"description": "Vaem's digital circuit research stand is designed to perform laboratory work on the course of digital circuits. The layout was shown at Infobalt in 1994 and attracted great interest. Used in the digital circuit laboratory."
+},
+{
+"poster": "ibm_diskai1311.webp",
+"audio": "imb1311_diskai_en.wav",
+"model": "ibm_diskai1311.glb",
+"title": "IBM 1311, 14-inch disk pack in the U.S. 1968",
+"description": "The six-14-inch magnetic disk pack is considered a prototype of the HDD of modern hard drives. The discs were placed in the scanner, and the information is recorded and read by a magnetic head system. This was the cheapest way to store information. The disk array had a capacity of 2.69 MB."
+},
+{
+"poster": "ibm_kompiuteris_terminalas.webp",
+"audio": "computer_ibm_terminal_en.wav",
+"model": "ibm_kompiuteris_terminalas.glb",
+"title": "COMPUTER TERMINAL IBM 5291 Italy 1985",
+"description": "The terminal display is 12 inches and is designed to connect to the 34/36/38 MEMOREX system with IBM 5251-12 or IBM 5291 controllers."
+},
+{
+"poster": "imula2_radija.webp",
+"audio": "imula_en.wav",
+"model": "imula2_radija.glb",
+"title": "Radio receiver Imula RP-8310 USSR 1986",
+"description": "Portable transistor radio with copper magnetic antenna works in long and medium wave diapozones."
+},
+{
+"poster": "kd_crown_maketa.webp",
+"audio": "cd_crown_en.wav",
+"model": "kd_crown_maketa.glb",
+"title": "KD player CROWN CD70 layout VAEM 1999",
+"description": "The CD player is designed to play digital recordings from CDs. The CD CROWN CD70 (Japan 1988) layout is designed to investigate electrical signals and analyze performance during laboratory work. Performed by a graduate used in an RTV laboratory."
+},
+{
+"poster": "komsolec_zalia_radija.webp",
+"audio": "kosmolec_en.wav",
+"model": "komsolec_zalia_radija.glb",
+"title": "Radio receiver KOMSOMOLEC USSR 1947",
+"description": "The detector radio is the simplest construction of the receiver, which existed until the era of light bulbs, working without a power source. Used as an educational tool."
+},
+{
+"poster": "komutatorius.webp",
+"audio": "kamutatorius_en.wav",
+"model": "komutatorius.glb",
+"title": "Laboratory switchboard ussr 1960",
+"description": "The laboratory switch is intended to be used as a switching element for the formation of electrical circuits. Used in an electrical laboratory."
+},
+{
+"poster": "kondensatorius.webp",
+"audio": "kondensatorius_en.wav",
+"model": "kondensatorius.glb",
+"title": "Laboratory capacitor in the USSR 1956",
+"description": "The laboratory capacitor is intended for use as a capacity element in electrical circuits. Capacitor capacity 1 microphar, maximum voltage 250 volts. Used in electrical laboratories."
+},
+{
+"poster": "ampermetras.webp",
+"audio": "ampermetras_en.wav",
+"model": "ampermetras.glb",
+"title": "Two-range ampermeter in the USSR 1967",
+"description": "The ampermeter of the fixed coil- a moving magnet - is designed to measure continuous and variable current with elevated precision two-dipozone. Measuring scales: 0-2.5 ampero and 0-5 volts. AC frequency 45 - 1500Hz. Measurement errors in all ranges 0.5%."
+},
+{
+"poster": "laboratorinis_varzynas_mazas.webp",
+"audio": "varzynas_not_sure1956_en.wav",
+"model": "laboratorinis_varzynas_mazas.glb",
+"title": "Laboratory competition in the USSR 1956",
+"description": "The laboratory competition (resistance set) is designed to create elements of the required resistance by forming various electrical circuits. Used in an electrical laboratory."
+},
+{
+"poster": "magnetola_elfa.webp",
+"audio": "elfa_stereo_magnetola_En.wav",
+"model": "magnetola_ELFA_LT.glb",
+"title": "Tape recorder ELFA 201-3 S Lithuania 1986",
+"description": "Stereo band (4 tracks) two-speed (19.5 m/s and 9.5 m/s) interscore with amplifier. Radiopozone of audible recording and reproducible frequencies 31.5 to 20000 Hz (19.5 m/s). Amplification output power 2 x 10 W. Used in RTV laboratory."
+},
+{
+"poster": "mobilus_vbox_motorola.webp",
+"audio": "motorola_box_en.wav",
+"model": "mobilus_vbox_motorola.glb",
+"title": "Mobile phone Motorola V.box (v100) United Kingdom 2000",
+"description": "Mobile GSM second generation (2G) phone with QWERTY type keyboard."
+},
+{
+"poster": "acer_anywhere_laptop.webp",
+"audio": "laptopas_acer_ak_en.wav",
+"model": "acer_anywhere_laptop.glb",
+"title": "Portable AK Acer AnyWare 1100LX Taiwan 1991.",
+"description": "IBM-compatible laptop. CPU (processor) - Intel 80386SX16 16 Mhz, Flash Drive 5MB, Hard Disk HDD - 120 MB, Flexible Floppy Drive - 3.5, Display - Monochrome resolution 640x480, operating system DOS, Windows 3.1. Weight 6 kg, price - 4500$."
+},
+{
+"poster": "perfokorta.webp",
+"audio": "perfokorta_en.wav",
+"model": "perfokorta.glb",
+"title": "Perfocard Lithuania 1960",
+"description": "Perfocard - a data medium used by automated systems. It is a rectangular card made of thin cardboard. The information in it is recorded by knocking out the holes. Patent holder IBM. The media was widely used by programmers until the 1980s."
+},
+{
+"poster": "power_macintosh.webp",
+"audio": "powerMacintosh_en.wav",
+"model": "power_macintosh.glb",
+"title": "Power Macintosh 6100/66 Apple Inc. Italy 1996",
+"description": "The first PowerPC type of Apple computer with two parallel hardware systems. CPU1 processor - PowerPC 601. 66 Mhz, Flash memory RAM - 32MB, CPU2 processor- Intel486DX. 66 Mhz, Flash Drive RAM - 16MB, HDD (hard drive) - 320MB, Optical drive CD ROM. Operating system - System 7, Mac OS 9, Windows 3.11"
+},
+{
+"poster": "radijaveras.webp",
+"audio": "apsilankykite_en.wav",
+"model": "radija_veras225_beGarsinimo.glb",
+"title": "Radija Veras",
+"description": "-"
+},
+{"poster": "bmm.webp", "audio": "BMM_en.wav", "model": "bmm.glb", "title": "Telephone distributor BMM 1-2 USSR 1988", "description": "Intercity telephone -telegraphic distribution (boxing) for connection of symmetric telephone cables. Used during practical training."},
+{
+"poster": "radijo_melodija_plokstelinis.webp",
+"audio": "radijola_vega_en.wav",
+"model": "radijo_melodija_plokstelinis.glb",
+"title": "Radiola VEGA 323 stereo USSR 1974",
+"description": "The radio receiver with the plate player is intended to receive a radio long, medium and mono wave signal and an ultra-stereo signal. The sound from the plates is reproduced stereo sound at 78, 45 and 33 speeds, output power 2 x 3W."
+},
+{
+"poster": "bystryca_2.webp",
+"audio": "aritmometras_bystrica_en.wav",
+"model": "bystryca_2.glb",
+"title": "Arithmemeter BYSTRICA - 2 USSR 1979",
+"description": "Electromechanical calculator - arithmetic widely used by accountants, engineers and students of technical specialties. In practice, it is a copy of the Danish arithmetic CONTEX-20."
+},
+{
+"poster": "rp_255_radija.webp",
+"audio": "rp_255_radio_stendas_en.wav",
+"model": "rp_255_radija.glb",
+"title": "Radio RP-255 layout VAEM 1998",
+"description": "The layout of the transistor radio receiver is designed for students to get acquainted with the structure of the receiver and to perform measurements at the checkpoints and search for the faults entered. Used in RTV laboratory."
+},
+{
+"poster": "santanka_buitinis.webp",
+"audio": "kompiuteris_santaka_en.wav",
+"model": "santaka_buitinis.glb",
+"title": "Personal computer SANTAKA Lithuania 1990",
+"description": "Lithuanian household version of the computer Sinclair ZX Spectrum. Computer base improved Intel 8080 processor - Z80 or its USSR copy KP580BM80A. The computer was connected to the TV and had great popularity among students, because it was possible to make it yourself."
+},
+{
+"poster": "silelis_tc32.webp",
+"audio": "silelis32tc_en.wav",
+"model": "silelis_tc32.glb",
+"title": "Šilelis 32TC-401D Lithuania 1989",
+"description": "The mobile colour TV is designed to work in metric and decimetric wave diapozones with the SECAM color coding system. Used in combination with other devices for television testing in the RTV laboratory."
+},
+{
+"poster": "telegrafo_raktas.webp",
+"audio": "telegrafo_raktas_en.wav",
+"model": "telegrafo_raktas.glb",
+"title": "Telegraph key KM-F USSR 1983",
+"description": "The telegraph key is for transmitters working in telegraph mode when messages are sent encrypted with Morse code. Used in radio amateur competitions."
+},
+{
+"poster": "televiziniu_signalu_gis_generatorius.webp",
+"audio": "televiziniu_signalu_generatorius_en.wav",
+"model": "televiziniu_signalu_gis_generatorius.glb",
+"title": "Televised signal generator GIS 01T USSR 1984",
+"description": "The generator is designed to form a standard black-and-white signal. Applied to the geometry of kinescopic TVs. Used in RTV laboratory."
+},
+{
+"poster": "tesla_lempa.webp",
+"audio": "radijo_lempa_tesla_en.wav",
+"model": "tesla_lempa.glb",
+"title": "Radijo lempa RE1000F TESLA Čekoslovakija 1983 m.",
+"description": "Tiesioginio kaitinimo generatorinis tetrodas skirtas naudoti amplitudinės ir dažninės moduliacijos radijo siųstuvuose. Išėjimo galia iki 1000W, dažnis iki 150Mhz. Lempa aušinama akyyviu oro srautu. Naudota kaip vaizdinė priemonė."
+},
+{
+"poster": "ukraina5_projektorius.webp",
+"audio": "kino_projektorius_ukraina5_en.wav",
+"model": "ukraina5_projektorius.glb",
+"title": "Film projector Ukraine 5 USSR 1976",
+"description": "The film projector is designed to showcase 8 mm films. Used during lectures to show educational films."
+},
+{
+"poster": "universalus_matuoklis.webp",
+"audio": "universalus_matuoklistl4_en.wav",
+"model": "universalus_matuoklis.glb",
+"title": "Universal meter TL-4 USSR 1974",
+"description": "The first model of the popular Soviet multimeter TL-4M. The meter is designed to measure dc and AC (up to 400 Hz) current voltage up to 700 volts. Also for continuous and variable current up to 3 amps without the use of an external shunt."
+},
+{
+"poster": "varzynas_didelis_mcp60.webp",
+"audio": "msp_60_varzynas_en.wav",
+"model": "varzynas_didelis_mcp60.glb",
+"title": "Laboratory competition MSP-60 USSR 1956",
+"description": "The laboratory competition (resistance set) is designed to create elements of the required resistance by forming various electrical circuits. Total ride from 0.01 omo to 10 kilo ohm"
+},
+{
+"poster": "vefta_12_telefonas.webp",
+"audio": "vefta_1994_telefonas_en.wav",
+"model": "vefta_12_telefonas.glb",
+"title": "Telephone apparatus VEF TA - 12 Latvia 1994",
+"description": "Wired phone with a button ton dial, with 10 programmable 18 numbers and the repetition of the last dialed number."
+},
+{
+"poster": "vefta_bagta50_telefonas.webp",
+"audio": "vefta_bagta_1950_en.wav",
+"model": "vefta_bagta50_telefonas.glb",
+"title": "Telephone apparatus VEF BAGTA - 50 Latvia 1950",
+"description": "Wired telephone with disc dial containing the alphabet with Cyrillic letters а, б, в, г, д, е, ж, и, к, л and bakelite housing."
+},
+{
+"poster": "vesna_202_radija.webp",
+"audio": "kasetinis_magnetofonas_vesna_en.wav",
+"model": "vesna_202_radija.glb",
+"title": "Cassette tape recorder VESNA 202 USSR 1980",
+"description": "Portable cassette tape recorder \"Viesna-202\" in 1980 made in Zaporozhye electrotechnical factory \"Iskra\". The second-class mono cassette tape recorder Vesna-202 has an increased output power and noise abatement system. The recording level is controlled by the dial indicator. The operating frequency range is 63-10000 Hz."
+},
+{
+"poster": "video_magnetofono_stentas_eif.webp",
+"audio": "vaizdo_magnetofono_stendas_en.wav",
+"model": "video_magnetofono_stentas_eif.glb",
+"title": "Video tape recorder layout VAEM 1998",
+"description": "The laboratory layout of the cassertic image recorder AIWA HV-G900AGPS (Japan 1989) was used to demonstrate the principles and structure of the video recorder has additional control points. Used in RTV laboratory."
+},
+{
+"poster": "voltmetras.webp",
+"audio": "voltmetras_en.wav",
+"model": "voltmetras.glb",
+"title": "Four-diapzone voltmeter in the USSR in 1958",
+"description": "For the purpose of increasing accuracy, the four-range indicator of the fixed coil is a rollermeter of a moving magnet. Measuring scales: 0-78V (volts); 0-150V; 0-300V, 0-600V. Measurement errors in all diapozones 0.5%."
+},
+{
+"poster": "zigzagine_antena.webp",
+"audio": "zigzagine_antena_en.wav",
+"model": "zigzagine_antena.glb",
+"title": "Zigzag antenna VAEM 1992",
+"description": "An extended diapozone zigzag antenna with a reflector for the reception of metric television waves, students can compare theoretical calculations with layout results. Used in the laboratory of signals and circuits."
+}]

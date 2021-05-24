@@ -1,0 +1,309 @@
+[{
+  "poster": "oscilografas.webp",
+  "audio": "oscilografas.wav",
+  "model": "oscilografas.glb",
+  "title": "Oscilografas S1-19A TSRS 1972 m.",
+  "description": "Analoginis - lempinis oscilografas, skirtas tirti iki 50 voltų amplitudes ir iki 1Mhz (megaherco) dažnio signalams. "
+},
+  {
+    "poster": "aukstavoltis_diodas.webp",
+    "audio": "aukstavoltis.wav",
+    "model": "aukstavoltis_diodas.glb",
+    "title": "Aukštavoltis diodas TSRS 1970 m.",
+    "description": "Diodas skirtas darbui aukštos įtampos daugiau kaip 500 voltų diapazone. Naudojamas kaip lyginimo elementas sudarant elektros grandines. Naudotas elektrotechnikos laboratorijoje."
+  },
+  {
+    "poster": "radijo_lempa_triodas.webp",
+    "audio": "radijo_lempa_triodas60kw.wav",
+    "model": "radijo_lempa_triodas.glb",
+    "title": "Radijo lempa GU-23A TSRS 1987 m.",
+    "description": "Radijo lempa - triodas skirta galingiems (iki 60kW) radijo siųstuvams. Lempa aušinama vandeniu. Naudota kaip vaizdinė priemonė."
+  },
+  {
+    "poster": "robik_pc.webp",
+    "audio": "butinis_kompiuteris_robik.wav",
+    "model": "robik_pc.glb",
+    "title": "Buitinis kompiuteris ROBIK TSRS 1987 m.",
+    "description": "Tarybinis asmeninio kompiuterio ZX Spektrum klonas su vakarietišku 8 bitų ST-Z80A mikroprocesoriumi. Operacinė sistema BASIC buvo įkraunama iš kasetinio magnetofono, o vaizdas rodomas televizoriuje."
+  },
+  {
+    "poster": "detektoriaus_stendas.webp",
+    "audio": "detektoriaus_maketas.wav",
+    "model": "detektoriaus_stendas3d.glb",
+    "title": "Laboratorinis detektoriaus maketas Lietuva 1976 m.",
+    "description": "Laboratorinis maketas buvo naudojamas laboratorinių darbų metu signalų ir grandinių laboratorijoje."
+  },
+  {
+    "poster": "egzaminatorius.webp",
+    "audio": "elektroninis_egzaminatorius.wav",
+    "model": "egzaminatorius.glb",
+    "title": "Elektroninis egzaminatorius VAEM (Vilniaus aukštesnioji elektronikos mokykla) 1975 m.",
+    "description": "Elektroninis egzaminatorius skirtas suaktyvinti auditoriai žinių tikrinimo metu. Prietaisas veikia logikos pagrindu su atmintimi. Sukonstruotas ET studentų taikant elektronines lempas su puslaidininkiais elementais. Naudotas elektronikos laboratorijoje 1975-1977 m."
+  },
+  {
+    "poster": "elektronika_bk_36_skaiciuotuvas.webp",
+    "audio": "skaiciuotuvas_bk.wav",
+    "model": "elektronika_bk_36_skaiciuotuvas.glb",
+    "title": "Skaičiuotuvas Elektronika BK 36 TSRS 1988 m.",
+    "description": "Elektroninio buitinio skaičiuotuvo pagrindas vienas didelės integracijos mikrograndynas K145IP15. Rezultatas atvaizduojamas 8 skilčių 7 segmentų indikatoriuje."
+  },
+  {
+    "poster": "elektroninis_vamzdis_lozi13.webp",
+    "audio": "13_lozi.wav",
+    "model": "elektroninis_vamzdis_lozi13.glb",
+    "title": "Elektroninis vamzdis 13LOZI TSRS 1964 m.",
+    "description": "Elektroninis vamzdis - kineskopo prototipas su vienu elektronų spinduliu, naudojamas analoginiuose oscilografuose. Mokomoji priemonė."
+  },
+  {
+    "poster": "eletronika580.webp",
+    "audio": "elekronika580_stendas.wav",
+    "model": "eletronika580.glb",
+    "title": "Mokomasis stendas Elektronika 580 TSRS 1989 m.",
+    "description": "Mokomasis mikroprocesorinis programų derinimo stendas Elektronika 580 skirtas nagrinėti mikroprocesorių veikimą ir mokytis programuoti Assembler kalba. Irenginio pagrindas Intel 8080 mikroprocesoriaus kopija (KPS808M80A). Naudotas mikroprocesorių laboratorijoje 1990-2000 m."
+  },
+  {
+    "poster": "feritine_matrica.webp",
+    "audio": "feritine_matrica.wav",
+    "model": "feritine_matrica.glb",
+    "title": "Feritinė atminties matrica TSRS 1960 m.",
+    "description": "Feritinė matrica, kurioje kiekvienas feritinis žiedelis galėdavo atsiminti 1 bitą. Matricos talpa apie 1024 bitus. Patento savininkas IBM, tačiau ji buvo gaminama visame pasaulyje, dažniausiai aptinkama Japonijoje iki 1975 m. Naudota kaip vaizdinė priemonė aiškinant atminties veikimo principą."
+  },
+  {
+    "poster": "generatoriusg15.webp",
+    "audio": "GS_15.wav",
+    "model": "generatoriusg15.glb",
+    "title": "Televizinių signalų generatorius GIS 01T TSRS 1984 m.",
+    "description": "Generatorius skirtas standartiniam juodai baltam signalui formuoti. Taikytas derinant kineskopinių televizorių geometriją. Naudotas RTV laboratorijoje."
+  },
+  {
+    "poster": "gradynas_stendas1994.webp",
+    "audio": "skaitmeniniu_grandynu_stendas.wav",
+    "model": "grandynas_stendas_1994.glb",
+    "title": "Skaitmeninių grandynų stendas VAEM 1994 m.",
+    "description": "VAEM pagamintas skaitmeninių grandynų tyrimo stendas skirtas atlikti skaitmeninių grandinių kurso laboratoriniams darbams. Maketas buvo demonstruotas Infobalt 1994 m. parodoje ir sulaukė didelio susidomėjimo. Naudotas skaitmeninių grandinių laboratorijoje."
+  },
+  {
+    "poster": "ibm_diskai1311.webp",
+    "audio": "IBM_1311.wav",
+    "model": "ibm_diskai1311.glb",
+    "title": "IBM 1311, 14 colių diskų paketas JAV 1968 m.",
+    "description": "Šešių 14 colių magnetinių diskų paketas laikomas šiuolaikinių kietųjų diskų HDD prototipu. Diskai buvo įdedami į skaitytuvą, o informacija užrašoma ir skaitoma magnetinių galvučių sistema. Tai buvo pigiausias informacijos saugojimo būdas. Diskų masyvo talpa siekė 2.69 MB."
+  },
+  {
+    "poster": "ibm_kompiuteris_terminalas.webp",
+    "audio": "kompiuterio_terminalas_ibm.wav",
+    "model": "ibm_kompiuteris_terminalas.glb",
+    "title": "Kompiuterio terminalas IBM 5291 Italija 1985 m.",
+    "description": "Terminalo ekranas yra 12 colių ir yra skirtas prisijungti prie 34/36/38 MEMOREX sistemos su IBM 5251-12 arba IBM 5291 valdikliais."
+  },
+  {
+    "poster": "imula2_radija.webp",
+    "audio": "imula.wav",
+    "model": "imula2_radija.glb",
+    "title": "Radijo imtuvas Imula RP-8310 TSRS 1986 m.",
+    "description": "Nešiojamasis tranzistorinis radijo imtuvas su varine magnetine antena dirbantis ilgųjų ir vidutinių bangų diapozonuose."
+  },
+  {
+    "poster": "kd_crown_maketa.webp",
+    "audio": "cd_crown.wav",
+    "model": "kd_crown_maketa.glb",
+    "title": "KD grotuvo CROWN CD70 maketas VAEM (Vilniaus aukštesnioji elektronikos mokykla) 1999 m.",
+    "description": "CD grotuvas skirtas skaitmeniniams įrašams atkurti iš kompaktinių plokštelių. CD CROWN CD70 (Japonija 1988 m.) maketas pritaikytas tirti elektrinius signalus ir analizuoti veikimą laboratoriniams darbų metu. Atliktas Diplomanto, naudotas RTV laboratorijoje."
+  },
+  {
+    "poster": "komsolec_zalia_radija.webp",
+    "audio": "kosmolec.wav",
+    "model": "komsolec_zalia_radija.glb",
+    "title": "Radijo imtuvas KOMSOMOLEC TSRS 1947 m.",
+    "description": "Detektorinis radijo imtuvas - pati paprasčiausia imtuvo konstrukcija, gyvavusi iki lempinių imtuvų eros, dirbanti be maitinimo šaltinio. Naudotas kaip mokomoji priemonė."
+  },
+  {
+    "poster": "komutatorius.webp",
+    "audio": "kamutatorius.wav",
+    "model": "komutatorius.glb",
+    "title": "Laboratorinis komutatorius TSRS 1960 m.",
+    "description": "Laboratorinis komutatorius skirtas naudoti kaip perjungimo elementas sudarant elektrines grandines. Naudotas elektrotechnikos laboratorijoje."
+  },
+  {
+    "poster": "kondensatorius.webp",
+    "audio": "kondensatorius.wav",
+    "model": "kondensatorius.glb",
+    "title": "Laboratorinis kondensatorius TSRS 1956 m.",
+    "description": "Laboratorinis kondensatorius skirtas naudoti kaip talpos elementas elektrinėse grandinėse. Kondensatoriaus talpa 1 mikrofaradas, maksimali įtampa 250 voltų. Naudotas elektrotechnikos laboratorijose."
+  },
+  {
+    "poster": "ampermetras.webp",
+    "audio": "ampermetras.wav",
+    "model": "ampermetras.glb",
+    "title": "Dviejų diapazonų ampermetras TSRS 1967 m.",
+    "description": "Padidinto tikslumo dviejų diapozonų rodiklinis fiksuotos ritės - judančio magneto ampermetras skirtas matuoti nuolatinę ir kintamą srovę. Matavimo skalės: 0-2.5 ampero ir 0-5 voltai. Kintamos srovės dažnis 45 - 1500Hz. Matavimo paklaidos visuose diapazonuose 0.5%."
+  },
+  {
+    "poster": "laboratorinis_varzynas_mazas.webp",
+    "audio": "varzynas_not_sure1956.wav",
+    "model": "laboratorinis_varzynas_mazas.glb",
+    "title": "Laboratorinis varžynas TSRS 1956 m.",
+    "description": "Laboratorinis varžynas (varžų rinkinys)  skirtas sukurti reikiamos varžos elementus sudarant įvairias elektrines grandines. Naudotas elektrotechnikos laboratorijoje."
+  },
+  {
+    "poster": "magnetola_elfa.webp",
+    "audio": "juostinis_stereo_elfa.wav",
+    "model": "magnetola_ELFA_LT.glb",
+    "title": "Juostinis magnetofonas ELFA 201-3 S Lietuva 1986 m.",
+    "description": "Juostinis stereo (4 takelių) dviejų greičių (19.5 m/s ir 9.5 m/s) magnetofonas su stiprintuvu. Garsinio signalo įrašomų ir atkuriamų dažnių diapozonas 31.5 - 20000 Hz (19.5 m/s). Stiprinimo išėjimo galia 2 x 10 W. Naudotas RTV laboratorijoje."
+  },
+  {
+    "poster": "mobilus_vbox_motorola.webp",
+    "audio": "motorola_box.wav",
+    "model": "mobilus_vbox_motorola.glb",
+    "title": "Mobilusis telefonas Motorola V.box (v100) Didžioji britanija 2000 m.",
+    "description": "Judriojo ryšio GSM antros kartos (2G) telefonas turintis QWERTY tipo klaviatūra."
+  },
+  {
+    "poster": "acer_anywhere_laptop.webp",
+    "audio": "laptopas_acer_ak.wav",
+    "model": "acer_anywhere_laptop.glb",
+    "title": "Nešiojamas AK Acer AnyWare 1100LX Taivanas 1991m.",
+    "description": "IBM suderinamas nešiojamas kompiuteris. CPU (procesorius) - Intel 80386SX16 16 Mhz, Operatyvioji atmintis 5MB, Kietasis diskas HDD - 120 MB, lanksčiųjų diskelių įrenginys - 3.5, ekranas - monochrominis skiriamoji geba 640x480, operacinė sistema DOS, Windows 3.1. Svoris 6 kg, kaina - 4500$."
+  },
+  {
+    "poster": "perfokorta.webp",
+    "audio": "perfokorta.wav",
+    "model": "perfokorta.glb",
+    "title": "Perfokorta Lietuva 1960 m.",
+    "description": "Perfokorta - duomenų laikmena, kurią naudoja automatizuotos sistemos. Tai stačiakampio formos kortelė, pagaminta iš plono kartono. Informacija joje užrašoma išmušant skylutes. Patento savininkas IBM. Laikmeną plačiai naudojo programuotojai iki 1980 m."
+  },
+  {
+    "poster": "power_macintosh.webp",
+    "audio": "powerMacintosh.wav",
+    "model": "power_macintosh.glb",
+    "title": "Power Macintosh 6100/66 Apple Inc. Italija 1996 m.",
+    "description": "Pirmasis PowerPC tipo Apple kompiuteris turintis dvi lygiagrečias aparatines sistemas. CPU1 procesorius - PowerPC 601. 66 Mhz, Operatyvioji atmintis RAM - 32MB, CPU2 procesorius- Intel486DX. 66 Mhz, Operatyvioji atmintis RAM - 16MB, HDD (kietasis diskas) - 320MB, Optinis įrenginys CD ROM. Operacinė sistema - System 7, Mac OS 9, Windows 3.11."
+  },
+  {
+    "poster": "radija_veras225_beGarsinimo.webp",
+    "audio": "apsilankykite.wav",
+    "model": "radija_veras225_beGarsinimo.glb",
+    "title": "Radija Veras",
+    "description": "-"
+  },
+  {"poster": "bmm.webp", "audio": "BMM.wav", "model": "bmm.glb", "title": "Telefoninis skirstytuvas BMM 1-2 TSRS 1988 m.", "description": "Tarpmiestinio telefoninio - telegrafinio ryšio skirstytuvas (boksas), skirtas simetrinių telefoninių  kabelių jungimui. Naudotas praktinių mokymų metu."},
+  {
+    "poster": "radijo_melodija_plokstelinis.webp",
+    "audio": "radijola_vega.wav",
+    "model": "radijo_melodija_plokstelinis.glb",
+    "title": "Radijola VEGA 323 stereo TSRS 1974 m.",
+    "description": "Radijo imtuvas su plokštelių grotuvu skirtas radijos ilgųjų, vidutinių ir trumpųjų (mono) bangų signalui priimti ir ultratrumpųjų (stereo) signalui priimti. Garsas iš plokštelių atkuriamas stereo garsas esant 78, 45 ir 33 greičiams, Išėjimo galia 2 x 3W."
+  },
+  {
+    "poster": "bystryca_2.webp",
+    "audio": "aritmometras_bystrica.wav",
+    "model": "bystryca_2.glb",
+    "title": "Aritmometras BYSTRICA - 2 TSRS 1979 m.",
+    "description": "Elektromechaninis skaičiuotuvas - aritmometras plačiai naudotas buhalterių, inžinierių ir techninių specialybių studentų. Praktiškai tai danų aritmometro CONTEX-20 kopija."
+  },
+  {
+    "poster": "rp_255_radija.webp",
+    "audio": "rp_255_radio_stendas.wav",
+    "model": "rp_255_radija.glb",
+    "title": "Radijo imtuvo RP-255 maketas VAEM 1998 m.",
+    "description": "Tranzistorinio radijo imtuvo maketas skirtas studentams susipažinti su imtuvo sandara ir atlikti matavimus kontroliniuose taškuose bei įvestų gedimų paiešką. Naudotas RTV laboratorijoje."
+  },
+  {
+    "poster": "santanka_buitinis.webp",
+    "audio": "kompiuteris_santaka.wav",
+    "model": "santaka_buitinis.glb",
+    "title": "Asmeninis kompiuteris SANTAKA Lietuva 1990 m.",
+    "description": "Lietuviškas buitinis kompiuterio Sinclair ZX Spectrum variantas. Kompiuterio pagrindas patobulintas Intel 8080 procesirius - Z80 arba jo TSRS kopija KP580BM80A. Kompiuteris buvo jungiamas prie televizoriaus ir turėjo didelį populiarumą tarp studentų, nes jį buvo galima pasigaminti pačiam."
+  },
+  {
+    "poster": "silelis_tc32.webp",
+    "audio": "silelis32tc.wav",
+    "model": "silelis_tc32.glb",
+    "title": "Šilelis 32TC-401D Lietuva 1989m.",
+    "description": "Mobilus spalvoto vaizdo televizorius skirtas dirbti metrinių ir decimetrinių bangų diapozonuose su SECAM spalvų kodavimo sistema. Naudotas kartu su kitais prietaisais tiriant televizinius signalus RTV laboratorijoje."
+  },
+  {
+    "poster": "telegrafo_raktas.webp",
+    "audio": "telegrafo_raktas.wav",
+    "model": "telegrafo_raktas.glb",
+    "title": "Telegrafo raktas KM-F TSRS 1983 m.",
+    "description": "Telegrafo raktas skirtas siųstuvams dirbantiems telegrafo rėžime kai pranešimai siunčiami užšifruoti Morzės kodu. Naudotas radijo mėgėjų varžybose."
+  },
+  {
+    "poster": "televiziniu_signalu_gis_generatorius.webp",
+    "audio": "televiziniu_signalu_generatorius.wav",
+    "model": "televiziniu_signalu_gis_generatorius.glb",
+    "title": "Televizinių signalų generatorius GIS 01T TSRS 1984 m.",
+    "description": "Generatorius skirtas standartiniam juodai baltam signalui formuoti. Taikytas derinant kineskopinių televizorių geometriją. Naudotas RTV laboratorijoje."
+  },
+  {
+    "poster": "tesla_lempa.webp",
+    "audio": "radijo_lempa_tesla.wav",
+    "model": "tesla_lempa.glb",
+    "title": "Radijo lempa RE1000F TESLA Čekoslovakija 1983 m.",
+    "description": "Tiesioginio kaitinimo generatorinis tetrodas skirtas naudoti amplitudinės ir dažninės moduliacijos radijo siųstuvuose. Išėjimo galia iki 1000W, dažnis iki 150Mhz. Lempa aušinama akyyviu oro srautu. Naudota kaip vaizdinė priemonė."
+  },
+  {
+    "poster": "ukraina5_projektorius.webp",
+    "audio": "kino_projektorius_ukraina5.wav",
+    "model": "ukraina5_projektorius.glb",
+    "title": "Kino projektorius Ukraina 5 TSRS  1976 m.",
+    "description": "Kino projektorius skirtas demonstruoti 8 mm kino juostoms. Naudotas paskaitų metu demonstruojant mokomuosius filmus."
+  },
+  {
+    "poster": "universalus_matuoklis.webp",
+    "audio": "universalus_matuoklistl4.wav",
+    "model": "universalus_matuoklis.glb",
+    "title": "Universalus matuoklis TL-4 TSRS 1974 m.",
+    "description": "Pirmasis populiaraus tarybinio multimetro TL-4M modelis. Matuoklis skirtas nuolatinės ir kintamos (iki 400 Hz) srovės įtampai iki 700 voltų matuoti. Taip pat nuolatinei ir kintamai srovei iki 3 amperų nenaudojant išorinio šunto."
+  },
+  {
+    "poster": "varzynas_didelis_mcp60.webp",
+    "audio": "msp_60_varzynas.wav",
+    "model": "varzynas_didelis_mcp60.glb",
+    "title": "Laboratorinis varžynas MSP-60 TSRS 1956 m.",
+    "description": "Laboratorinis varžynas (varžų rinkinys) skirtas sukurti reikiamos varžos elementus sudarant įvairias elektrines grandines. Bendra važa nuo 0.01 omo iki 10 kilo omų."
+  },
+  {
+    "poster": "vefta_12_telefonas.webp",
+    "audio": "vefta_1994_telefonas.wav",
+    "model": "vefta_12_telefonas.glb",
+    "title": "Telefono aparatas VEF TA - 12 Latvija 1994 m.",
+    "description": "Laidinis telefonas su mygtukiniu toniniu numerio rinkikliu, turintis 10 programuojamų 18-os skaičių numerių ir paskutinio rinkto numerio kartojimo funkcija."
+  },
+  {
+    "poster": "vefta_bagta50_telefonas.webp",
+    "audio": "vefta_bagta_1950.wav",
+    "model": "vefta_bagta50_telefonas.glb",
+    "title": "Telefono apratas VEF BAGTA - 50 Latvija 1950 m.",
+    "description": "Laidinis telefono aparatas su diskinio numerio rinkikliu turintis abėcėlę su kirilicos raidėmis а, б, в, г, д, е, ж, и, к, л ir bakelito korpusą."
+  },
+  {
+    "poster": "vesna_202_radija.webp",
+    "audio": "kasetinis_magnetofonas_vesna.wav",
+    "model": "vesna_202_radija.glb",
+    "title": "Kasetinis magnetofonas VESNA 202 TSRS 1980 m.",
+    "description": "Nešiojamasis kasetinis magnetofonas „Viesna-202“ 1977 m. Pagamintas Zaporožės elektrotechnikos gamykloje „Iskra“. Antrosios klasės monofoninis kasetinis magnetofonas „Vesna-202“ turi padidintą išėjimo galią, triukšmo mažinimo sistemą. Įrašymo lygį kontroliuoja rinkimo indikatorius. Darbinių dažnių diapazonas yra 63-10000 Hz."
+  },
+  {
+    "poster": "video_magnetofono_stentas_eif.webp",
+    "audio": "vaizdo_magnetofono_stendas.wav",
+    "model": "video_magnetofono_stentas_eif.glb",
+    "title": "Vaizdo magnetofono maketas VAEM 1998 m.",
+    "description": "Kasetinio vaizdo magnetofono AIWA HV-G900AGPS (Japonija 1989 m.) laboratorinis maketas naudotas demonstruojant vaizdo magnetofono veikimo principus ir sandarą patobulinta konstrukcija turi papildomus kontrolinius taškus. Naudota RTV laboratorijoje."
+  },
+  {
+    "poster": "voltmetras.webp",
+    "audio": "voltmetras.wav",
+    "model": "voltmetras.glb",
+    "title": "Keturių diapozonų voltmetras TSRS 1958 m.",
+    "description": "Padidinto tikslumo keturių diapazonų rodiklinis fiksuotos ritės - judančio magneto voltmetras. Matavimo skalės: 0-78V (voltų); 0-150V; 0-300V, 0-600V. Matavimų paklaidos visuose diapozonuose 0.5%."
+  },
+  {
+    "poster": "zigzagine_antena.webp",
+    "audio": "zigzagine_antena.wav",
+    "model": "zigzagine_antena.glb",
+    "title": "Zigzaginė antena VAEM 1992 m.",
+    "description": "Išplėstinio diapozono zigzaginė antena su reflektoriumi skirta metrinių televizijos bangų priėmimui, studentai gali palyginti teorinius skaičiavimus su maketo rezultatais. Naudota signalų ir grandinių laboratorijoje."
+  }]
