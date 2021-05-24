@@ -6,10 +6,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -17,6 +19,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.*
@@ -107,14 +110,31 @@ fun Greeting(name: String) {
             ) {
 
 
-                Row() {
+                Row {
+
+
+
+                        IconButton(modifier = Modifier
+                            .width(64.dp)
+                            .height(70.dp)
+                            .background(color = colorResource(id = R.color.white)), onClick = { /*TODO*/ }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
+                                contentDescription = null,
+                                tint = colorResource(id = R.color.purple_700)
+                            )
+                        }
+
+
+
+
                     DisableSelection {
                         Text(
                             "Dviejų diapazonų ampermetras TSRS 1967 m.",
                             maxLines = 20,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
-                                .background(color = colorResource(id = R.color.description_background))
+                                .background(color = colorResource(id = R.color.white))
                                 .padding(10.dp),
                             fontSize = 20.sp, fontWeight = FontWeight.SemiBold,
                         )
@@ -122,42 +142,21 @@ fun Greeting(name: String) {
                     }
                 }
 
-                Row(modifier = Modifier.background(color = colorResource(id = R.color.item_background))) {
-                    IconButton(modifier = Modifier
-                        .size(size), onClick = { /*TODO*/ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
-                            contentDescription = null,
-                            tint = colorResource(id = R.color.purple_700)
-                        )
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                            Image(
+                                contentScale = ContentScale.Crop,
+                                painter = painterResource(id = R.drawable.oscilografas),
+                                contentDescription = "3D",
+                                modifier = Modifier
+                                    .size(300.dp)
+                                    .background(colorResource(id = R.color.item_background))
+                            )
+
                     }
-                    Spacer(modifier = Modifier.width(172.dp))
-                    IconButton(modifier = Modifier.size(size), onClick = { /*TODO*/ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.viewmodel),
-                            contentDescription = null,
-                            tint = colorResource(id = R.color.purple_700)
-                        )
-                    }
-                }
-
-
-
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        contentScale = ContentScale.Crop,
-                        painter = painterResource(id = R.drawable.oscilografas),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(300.dp)
-                            .background(colorResource(id = R.color.item_background))
-                    )
-
-
-                }
 
 
 
@@ -198,7 +197,7 @@ fun Greeting(name: String) {
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colors.primary
+                        color = colorResource(id = R.color.white)
                     )
                 }
 
