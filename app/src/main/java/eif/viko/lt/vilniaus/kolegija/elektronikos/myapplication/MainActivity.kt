@@ -1,6 +1,9 @@
 package eif.viko.lt.vilniaus.kolegija.elektronikos.myapplication
 
+import android.content.Intent
 import android.content.res.Resources
+import android.media.AudioAttributes
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,9 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -32,31 +37,103 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
 import eif.viko.lt.vilniaus.kolegija.elektronikos.myapplication.ui.theme.MyApplicationTheme
 import kotlin.math.absoluteValue
+import androidx.core.content.ContextCompat.startActivity
+
 
 class MainActivity : ComponentActivity() {
+
+
     @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
+            val context = LocalContext.current
             MyApplicationTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
+                Scaffold(
+                    content = { Greeting("Android") },
+                    bottomBar = {
+                        BottomAppBar {
+
+                            IconButton(modifier = Modifier
+                                .width(64.dp)
+                                .height(50.dp), onClick = {
+
+                                val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
+                                val intentUri =
+                                    Uri.parse("https://arvr.google.com/scene-viewer/1.0").buildUpon()
+                                        .appendQueryParameter(
+                                            "file",
+                                            "https://raw.githubusercontent.com/eif-courses/models/main/acer_anywhere_laptop.glb"
+                                        ).build()
+                                sceneViewerIntent.data = intentUri
+                                sceneViewerIntent.setPackage("com.google.ar.core")
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
+                                    contentDescription = null,
+                                    tint = colorResource(id = R.color.green)
+                                )
+                            }
+                            IconButton(modifier = Modifier
+                                .width(64.dp)
+                                .height(50.dp), onClick = {
+
+                                val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
+                                val intentUri =
+                                    Uri.parse("https://arvr.google.com/scene-viewer/1.0").buildUpon()
+                                        .appendQueryParameter(
+                                            "file",
+                                            "https://raw.githubusercontent.com/eif-courses/models/main/acer_anywhere_laptop.glb"
+                                        ).build()
+                                sceneViewerIntent.data = intentUri
+                                sceneViewerIntent.setPackage("com.google.ar.core")
+                                context.startActivity(sceneViewerIntent)
+
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.vaizdoperziura),
+                                    contentDescription = null,
+                                    tint = colorResource(id = R.color.black)
+                                )
+                            }
+                        }
+                    })
             }
         }
     }
 }
 
+
+//override fun playSound(item: Item) {
+//    val url = item.audio                ///"http://........" // your URL here
+//    val mediaPlayer: MediaPlayer? = MediaPlayer().apply {
+//        setAudioAttributes(
+//            AudioAttributes.Builder()
+//                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+//                .setUsage(AudioAttributes.USAGE_MEDIA)
+//                .build()
+//        )
+//        setDataSource(url)
+//        prepare() // might take long! (for buffering, etc)
+//        start()
+//    }
+//}
+
+
 @ExperimentalPagerApi
 @Composable
 fun Greeting(name: String) {
+
+
+    val context = LocalContext.current
     val temp = listOf(
         "Labas",
         "Krabas",
@@ -92,7 +169,8 @@ fun Greeting(name: String) {
         Card(
 
             elevation = 4.dp, modifier = Modifier
-                .fillMaxSize()
+                .fillMaxHeight(0.93f)
+                .fillMaxWidth()
         ) {
 
             Image(
@@ -113,28 +191,13 @@ fun Greeting(name: String) {
                 Row {
 
 
-
-                        IconButton(modifier = Modifier
-                            .width(64.dp)
-                            .height(70.dp)
-                            .background(color = colorResource(id = R.color.white)), onClick = { /*TODO*/ }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
-                                contentDescription = null,
-                                tint = colorResource(id = R.color.purple_700)
-                            )
-                        }
-
-
-
-
                     DisableSelection {
                         Text(
                             "Dviejų diapazonų ampermetras TSRS 1967 m.",
                             maxLines = 20,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
-                                .background(color = colorResource(id = R.color.white))
+                                .background(color = colorResource(id = R.color.description_background))
                                 .padding(10.dp),
                             fontSize = 20.sp, fontWeight = FontWeight.SemiBold,
                         )
@@ -143,29 +206,31 @@ fun Greeting(name: String) {
                 }
 
 
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
 
-                            Image(
-                                contentScale = ContentScale.Crop,
-                                painter = painterResource(id = R.drawable.oscilografas),
-                                contentDescription = "3D",
-                                modifier = Modifier
-                                    .size(300.dp)
-                                    .background(colorResource(id = R.color.item_background))
-                            )
+                    Image(
+                        contentScale = ContentScale.Crop,
+                        painter = painterResource(id = R.drawable.oscilografas),
+                        contentDescription = "3D",
+                        modifier = Modifier
+                            .size(300.dp)
+                            .background(colorResource(id = R.color.item_background))
+                    )
 
-                    }
+                }
 
 
 
                 Row() {
+
                     Image(
                         painter = painterResource(id = R.drawable.fingers),
                         contentDescription = null, contentScale = ContentScale.Crop,
-                        modifier = Modifier.size(200.dp, 50.dp)
+                        modifier = Modifier.size(170.dp, 50.dp)
                     )
+
 
                 }
 
@@ -180,13 +245,14 @@ fun Greeting(name: String) {
                             textAlign = TextAlign.Center,
                             modifier = Modifier
                                 .background(color = colorResource(id = R.color.other_description_background))
-                                .padding(10.dp), fontSize = 16.sp,fontWeight = FontWeight.W300,
+                                .padding(10.dp), fontSize = 16.sp, fontWeight = FontWeight.W300,
                             color = colorResource(id = R.color.other_description_color)
                         )
 
                     }
 
                 }
+
 
 
 
@@ -207,6 +273,7 @@ fun Greeting(name: String) {
 
         }
 
+
     }
 
 
@@ -220,14 +287,62 @@ fun Greeting(name: String) {
 //
 //        }
 
-
 }
 
 @ExperimentalPagerApi
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
+    val context = LocalContext.current
     MyApplicationTheme {
-        Greeting("Android")
+        Scaffold(
+            content = { Greeting("Android") },
+            bottomBar = {
+                BottomAppBar {
+
+                    IconButton(modifier = Modifier
+                        .width(64.dp)
+                        .height(50.dp), onClick = {
+
+                        val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
+                        val intentUri =
+                            Uri.parse("https://arvr.google.com/scene-viewer/1.0").buildUpon()
+                                .appendQueryParameter(
+                                    "file",
+                                    "https://raw.githubusercontent.com/eif-courses/models/main/acer_anywhere_laptop.glb"
+                                ).build()
+                        sceneViewerIntent.data = intentUri
+                        sceneViewerIntent.setPackage("com.google.ar.core")
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
+                            contentDescription = null,
+                            tint = colorResource(id = R.color.green)
+                        )
+                    }
+                    IconButton(modifier = Modifier
+                        .width(64.dp)
+                        .height(50.dp), onClick = {
+
+                        val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
+                        val intentUri =
+                            Uri.parse("https://arvr.google.com/scene-viewer/1.0").buildUpon()
+                                .appendQueryParameter(
+                                    "file",
+                                    "https://raw.githubusercontent.com/eif-courses/models/main/acer_anywhere_laptop.glb"
+                                ).build()
+                        sceneViewerIntent.data = intentUri
+                        sceneViewerIntent.setPackage("com.google.ar.core")
+                        context.startActivity(sceneViewerIntent)
+
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.vaizdoperziura),
+                            contentDescription = null,
+                            tint = colorResource(id = R.color.black)
+                        )
+                    }
+                }
+            })
     }
 }
