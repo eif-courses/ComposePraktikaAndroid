@@ -107,12 +107,33 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
     HorizontalPager(state = pagerState, itemSpacing = 10.dp) { page ->
         // Our page content
+
+        //val url = "https://eif-muziejus.lt/audio_ru/oscilografas.wav"
+        val url = "https://raw.githubusercontent.com/eif-courses/modelsausdio/main/EN/${museumItems[page].audio}"
+        ///"http://........" // your URL here
+
+        println(url)
+
+
+        val mediaPlayer: MediaPlayer = MediaPlayer().apply {
+            setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .build()
+            )
+            setDataSource(url)
+            prepare() // might take long! (for buffering, etc)
+
+        }
+
         Card(
 
             elevation = 4.dp, modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxWidth()
         ) {
+
 
             Image(
                 contentScale = ContentScale.Crop,
@@ -216,25 +237,10 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                                 .height(70.dp), onClick = {
 
 
-                                //val url = "https://eif-muziejus.lt/audio_ru/oscilografas.wav"
-                                val url = "https://raw.githubusercontent.com/eif-courses/modelsausdio/main/EN/${museumItems[page].audio}"
-                                ///"http://........" // your URL here
-
-                                println(url)
 
 
-                                val mediaPlayer: MediaPlayer = MediaPlayer().apply {
-                                    setAudioAttributes(
-                                        AudioAttributes.Builder()
-                                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                            .setUsage(AudioAttributes.USAGE_MEDIA)
-                                            .build()
-                                    )
-                                    setDataSource(url)
-                                    prepare() // might take long! (for buffering, etc)
-                                    start()
-                                }
 
+                                    mediaPlayer.start()
                                     // https://raw.githubusercontent.com/eif-courses/modelsausdio/main/EN/acer_ak_anywhere_en.wav
 
 
