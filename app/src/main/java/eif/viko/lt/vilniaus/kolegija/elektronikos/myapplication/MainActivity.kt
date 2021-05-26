@@ -144,7 +144,7 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
             ) {
 
 
-                Row {
+                Row(modifier = Modifier.fillMaxWidth()) {
 
 
                     DisableSelection {
@@ -154,7 +154,7 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                             textAlign = TextAlign.Center,
                             modifier = Modifier
                                 .background(color = MaterialTheme.colors.primary)
-                                .padding(10.dp),
+                                .padding(10.dp).fillMaxWidth(),
                             fontSize = 20.sp, fontWeight = FontWeight.W300, color = colorResource(
                                 id = R.color.purple_700
                             )
@@ -177,27 +177,10 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                         ),
                         contentDescription = "3D",
                         modifier = Modifier
-                            .size(300.dp)
-                            .background(colorResource(id = R.color.item_background))
+                            .fillMaxWidth()
                     )
 
                 }
-
-
-
-                Row() {
-
-                    Image(
-                        painter = painterResource(id = R.drawable.fingers),
-                        contentDescription = null, contentScale = ContentScale.Crop,
-                        modifier = Modifier.size(170.dp, 50.dp)
-                    )
-
-
-                }
-
-
-
 
                 Row() {
                     DisableSelection {
