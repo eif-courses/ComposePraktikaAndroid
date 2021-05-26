@@ -1,9 +1,7 @@
 package eif.viko.lt.vilniaus.kolegija.elektronikos.myapplication
 
 import android.content.Intent
-import android.content.res.Resources
-import android.media.AudioAttributes
-import android.media.MediaPlayer
+
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -21,6 +19,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -97,6 +97,8 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
     val context = LocalContext.current
 
+   // var progress by remember {  mutableStateOf(0.1f) }
+
 
     val size = 64.dp
 
@@ -116,17 +118,17 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
         println(url)
 
 
-        val mediaPlayer: MediaPlayer = MediaPlayer().apply {
-            setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .build()
-            )
-            setDataSource(url)
-            prepare() // might take long! (for buffering, etc)
-
-        }
+//        val mediaPlayer: MediaPlayer = MediaPlayer().apply {
+//            setAudioAttributes(
+//                AudioAttributes.Builder()
+//                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+//                    .setUsage(AudioAttributes.USAGE_MEDIA)
+//                    .build()
+//            )
+//            setDataSource(url)
+//            prepare() // might take long! (for buffering, etc)
+//
+//        }
 
         Card(
 
@@ -154,7 +156,8 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                             textAlign = TextAlign.Center,
                             modifier = Modifier
                                 .background(color = MaterialTheme.colors.primary)
-                                .padding(10.dp).fillMaxWidth(),
+                                .padding(10.dp)
+                                .fillMaxWidth(),
                             fontSize = 20.sp, fontWeight = FontWeight.W300, color = colorResource(
                                 id = R.color.purple_700
                             )
@@ -208,11 +211,11 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
                         Button(
                             modifier = Modifier
-                                .width(120.dp)
+                                .width(70.dp)
                                 .height(70.dp), onClick = {
 
 
-                                mediaPlayer.start()
+                               // mediaPlayer.start()
                                 // https://raw.githubusercontent.com/eif-courses/modelsausdio/main/EN/acer_ak_anywhere_en.wav
 
 
@@ -220,10 +223,27 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
                                 contentDescription = null,
-                                tint = colorResource(id = R.color.green)
+                                tint = colorResource(id = R.color.purple_700)
                             )
 
                         }
+
+                        LinearProgressIndicator(
+                            backgroundColor = Color.White,
+                            color = colorResource(id = R.color.purple_700),
+                            progress = 0.5f,
+                            modifier = Modifier.fillMaxWidth(0.7f).padding(start=20.dp)
+                        )
+                        Text(
+                            text = "0:25",
+                            modifier = Modifier.padding(start = 30.dp),
+                            color = Color.Black
+                        )
+
+                    }
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    BottomAppBar {
 
                         Button(modifier = Modifier
                             .width(120.dp)
@@ -257,7 +277,6 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
                     }
                 }
-
 
             }
 
