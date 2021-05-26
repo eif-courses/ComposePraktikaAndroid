@@ -109,7 +109,8 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
         // Our page content
 
         //val url = "https://eif-muziejus.lt/audio_ru/oscilografas.wav"
-        val url = "https://raw.githubusercontent.com/eif-courses/modelsausdio/main/EN/${museumItems[page].audio}"
+        val url =
+            "https://raw.githubusercontent.com/eif-courses/audio/main/EN/${museumItems[page].media}.wav"
         ///"http://........" // your URL here
 
         println(url)
@@ -135,13 +136,6 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
         ) {
 
 
-            Image(
-                contentScale = ContentScale.Crop,
-                painter = painterResource(
-                    id = R.drawable.background
-                ),
-                contentDescription = null
-            )
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -155,7 +149,7 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
                     DisableSelection {
                         Text(
-                            museumItems[page].title,
+                            museumItems[page].title_en,
                             maxLines = 20,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
@@ -178,9 +172,7 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                         contentScale = ContentScale.Crop,
                         painter = painterResource(
                             id = context.resources.getIdentifier(
-                                museumItems[page].poster.substringBefore(
-                                    '.'
-                                ), "drawable", context.packageName
+                                museumItems[page].media, "drawable", context.packageName
                             )
                         ),
                         contentDescription = "3D",
@@ -210,7 +202,7 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                 Row() {
                     DisableSelection {
                         Text(
-                            museumItems[page].description,
+                            museumItems[page].description_en,
                             maxLines = 20,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
@@ -237,56 +229,50 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                                 .height(70.dp), onClick = {
 
 
+                                mediaPlayer.start()
+                                // https://raw.githubusercontent.com/eif-courses/modelsausdio/main/EN/acer_ak_anywhere_en.wav
 
 
+                            }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
+                                contentDescription = null,
+                                tint = colorResource(id = R.color.green)
+                            )
 
-                                    mediaPlayer.start()
-                                    // https://raw.githubusercontent.com/eif-courses/modelsausdio/main/EN/acer_ak_anywhere_en.wav
+                        }
 
+                        Button(modifier = Modifier
+                            .width(120.dp)
+                            .height(70.dp), onClick = {
 
-                                }) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
-                                    contentDescription = null,
-                                    tint = colorResource(id = R.color.green)
-                                )
+                            val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
+                            val intentUri =
+                                Uri.parse("https://arvr.google.com/scene-viewer/1.0")
+                                    .buildUpon()
+                                    .appendQueryParameter(
+                                        "file",
+                                        "https://raw.githubusercontent.com/eif-courses/models/main/${museumItems[page].media}.glb"
+                                    ).build()
+                            sceneViewerIntent.data = intentUri
+                            sceneViewerIntent.setPackage("com.google.ar.core")
+                            context.startActivity(sceneViewerIntent)
 
-                            }
+                        }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.viewmodel),
+                                contentDescription = null,
+                                tint = colorResource(id = R.color.black)
+                            )
 
-                                Button(modifier = Modifier
-                                    .width(120.dp)
-                                    .height(70.dp), onClick = {
+                        }
+                        Text(
+                            text = "Page ${page + 1}/${museumItems.size}",
+                            modifier = Modifier.padding(start = 30.dp),
+                            color = Color.Black
+                        )
 
-                                    val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
-                                    val intentUri =
-                                        Uri.parse("https://arvr.google.com/scene-viewer/1.0")
-                                            .buildUpon()
-                                            .appendQueryParameter(
-                                                "file",
-                                                "https://raw.githubusercontent.com/eif-courses/models/main/${museumItems[page].model}"
-                                            ).build()
-                                    sceneViewerIntent.data = intentUri
-                                    sceneViewerIntent.setPackage("com.google.ar.core")
-                                    context.startActivity(sceneViewerIntent)
-
-                                }) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.vaizdoperziura),
-                                        contentDescription = null,
-                                        tint = colorResource(id = R.color.black)
-                                    )
-
-                                }
-                                Text(
-                                    text = "Page ${page + 1}/${museumItems.size}",
-                                    modifier = Modifier.padding(start = 30.dp),
-                                    color = Color.Black
-                                )
-
-                            }
                     }
-
-
                 }
 
 
@@ -294,18 +280,21 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
 
         }
-    }
 
-    @ExperimentalPagerApi
-    @Preview(showBackground = true)
-    @Composable
-    fun DefaultPreview() {
-        val context = LocalContext.current
-        val gson = Gson()
-        val text =
-            context.resources.openRawResource(R.raw.items).bufferedReader().use { it.readText() }
-        val items: List<Item> = gson.fromJson(text, Array<Item>::class.java).toList()
-        MyApplicationTheme {
-            DisplayMuseumItems(items)
-        }
+
     }
+}
+
+@ExperimentalPagerApi
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    val context = LocalContext.current
+    val gson = Gson()
+    val text =
+        context.resources.openRawResource(R.raw.items).bufferedReader().use { it.readText() }
+    val items: List<Item> = gson.fromJson(text, Array<Item>::class.java).toList()
+    MyApplicationTheme {
+        DisplayMuseumItems(items)
+    }
+}
