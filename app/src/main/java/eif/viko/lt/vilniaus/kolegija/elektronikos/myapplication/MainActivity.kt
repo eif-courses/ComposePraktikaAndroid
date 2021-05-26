@@ -17,10 +17,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,6 +51,7 @@ import kotlin.math.absoluteValue
 import androidx.core.content.ContextCompat.startActivity
 import com.google.gson.Gson
 import eif.viko.lt.vilniaus.kolegija.elektronikos.myapplication.model.Item
+import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
@@ -95,27 +99,101 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DisplayMuseumItems(museumItems: List<Item>) {
 
+    val fabShape = CircleShape
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+    val pagerState = rememberPagerState(pageCount = museumItems.size)
     val context = LocalContext.current
 
-   // var progress by remember {  mutableStateOf(0.1f) }
+    Scaffold(
+        scaffoldState = scaffoldState,
+        drawerContent = { Text("Drawer content") },
+        topBar = { },
+        bottomBar = {
+            BottomAppBar(cutoutShape = fabShape, modifier = Modifier.height(100.dp), backgroundColor = colorResource(
+                id = R.color.white
+            )) {
+                Button(
+                    modifier = Modifier
+                        .width(70.dp)
+                        .height(70.dp), onClick = {
 
 
-    val size = 64.dp
+                        // mediaPlayer.start()
+                        // https://raw.githubusercontent.com/eif-courses/modelsausdio/main/EN/acer_ak_anywhere_en.wav
 
-    // Display 10 items
+
+                    }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
+                        contentDescription = null,
+                        tint = colorResource(id = R.color.purple_700)
+                    )
+
+                }
+
+                LinearProgressIndicator(
+                    backgroundColor = Color.White,
+                    color = colorResource(id = R.color.purple_700),
+                    progress = 0.5f,
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f)
+                        .padding(start = 20.dp)
+                )
+                Text(
+                    text = "0:25",
+                    modifier = Modifier.padding(start = 30.dp),
+                    color = Color.Black
+                )
+            }
+        },
+        floatingActionButtonPosition = FabPosition.Center,
+        isFloatingActionButtonDocked = true,
+        floatingActionButton = {
+            FloatingActionButton(
+                shape = fabShape,
+                onClick = {
+                    val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
+                    val intentUri =
+                        Uri.parse("https://arvr.google.com/scene-viewer/1.0")
+                            .buildUpon()
+                            .appendQueryParameter(
+                                "file",
+                                "https://raw.githubusercontent.com/eif-courses/models/main/${museumItems[pagerState.currentPage].media}.glb"
+                            ).build()
+                    sceneViewerIntent.data = intentUri
+                    sceneViewerIntent.setPackage("com.google.ar.core")
+                    context.startActivity(sceneViewerIntent)
 
 
-    val pagerState = rememberPagerState(pageCount = museumItems.size)
 
-    HorizontalPager(state = pagerState, itemSpacing = 10.dp) { page ->
-        // Our page content
+                }
+            ) {
+                Icon(painterResource(id = R.drawable.ic_baseline_360_50),"")
+            }
+        }, content = {
 
-        //val url = "https://eif-muziejus.lt/audio_ru/oscilografas.wav"
-        val url =
-            "https://raw.githubusercontent.com/eif-courses/audio/main/EN/${museumItems[page].media}.wav"
-        ///"http://........" // your URL here
 
-        println(url)
+
+            // var progress by remember {  mutableStateOf(0.1f) }
+
+
+            val size = 64.dp
+
+            // Display 10 items
+
+
+
+
+            HorizontalPager(state = pagerState, itemSpacing = 10.dp) { page ->
+                // Our page content
+
+                //val url = "https://eif-muziejus.lt/audio_ru/oscilografas.wav"
+                val url =
+                    "https://raw.githubusercontent.com/eif-courses/audio/main/EN/${museumItems[page].media}.wav"
+                ///"http://........" // your URL here
+
+                println(url)
 
 
 //        val mediaPlayer: MediaPlayer = MediaPlayer().apply {
@@ -130,161 +208,97 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 //
 //        }
 
-        Card(
+                Card(
 
-            elevation = 4.dp, modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth()
-        ) {
-
-
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(10.dp)
-            ) {
-
-
-                Row(modifier = Modifier.fillMaxWidth()) {
-
-
-                    DisableSelection {
-                        Text(
-                            museumItems[page].title_en,
-                            maxLines = 20,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .background(color = MaterialTheme.colors.primary)
-                                .padding(10.dp)
-                                .fillMaxWidth(),
-                            fontSize = 20.sp, fontWeight = FontWeight.W300, color = colorResource(
-                                id = R.color.purple_700
-                            )
-                        )
-
-                    }
-                }
-
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
+                    elevation = 4.dp, modifier = Modifier
+                        .fillMaxHeight()
+                        .fillMaxWidth()
                 ) {
 
-                    Image(
-                        contentScale = ContentScale.Crop,
-                        painter = painterResource(
-                            id = context.resources.getIdentifier(
-                                museumItems[page].media, "drawable", context.packageName
-                            )
-                        ),
-                        contentDescription = "3D",
+
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
-                            .fillMaxWidth()
-                    )
-
-                }
-
-                Row() {
-                    DisableSelection {
-                        Text(
-                            museumItems[page].description_en,
-                            maxLines = 20,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .background(color = colorResource(id = R.color.other_description_background))
-                                .padding(10.dp),
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.W300,
-                            color = colorResource(id = R.color.other_description_color)
-                        )
-
-                    }
-
-                }
-                Divider(
-                    modifier = Modifier
-                        .size(2.dp)
-                )
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    BottomAppBar {
-
-                        Button(
-                            modifier = Modifier
-                                .width(70.dp)
-                                .height(70.dp), onClick = {
+                            .padding(10.dp)
+                    ) {
 
 
-                               // mediaPlayer.start()
-                                // https://raw.githubusercontent.com/eif-courses/modelsausdio/main/EN/acer_ak_anywhere_en.wav
+                        Row(modifier = Modifier.fillMaxWidth()) {
 
 
-                            }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
-                                contentDescription = null,
-                                tint = colorResource(id = R.color.purple_700)
+                            DisableSelection {
+                                Text(
+                                    museumItems[page].title_en,
+                                    maxLines = 20,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .background(color = MaterialTheme.colors.primary)
+                                        .padding(10.dp)
+                                        .fillMaxWidth(),
+                                    fontSize = 20.sp, fontWeight = FontWeight.W300, color = colorResource(
+                                        id = R.color.purple_700
+                                    )
+                                )
+
+                            }
+                        }
+
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                            Image(
+                                contentScale = ContentScale.Crop,
+                                painter = painterResource(
+                                    id = context.resources.getIdentifier(
+                                        museumItems[page].media, "drawable", context.packageName
+                                    )
+                                ),
+                                contentDescription = "3D",
+                                modifier = Modifier
+                                    .fillMaxWidth()
                             )
 
                         }
 
-                        LinearProgressIndicator(
-                            backgroundColor = Color.White,
-                            color = colorResource(id = R.color.purple_700),
-                            progress = 0.5f,
-                            modifier = Modifier.fillMaxWidth(0.7f).padding(start=20.dp)
-                        )
-                        Text(
-                            text = "0:25",
-                            modifier = Modifier.padding(start = 30.dp),
-                            color = Color.Black
-                        )
+                        Row() {
+                            DisableSelection {
+                                Text(
+                                    museumItems[page].description_en,
+                                    maxLines = 20,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .background(color = colorResource(id = R.color.other_description_background))
+                                        .padding(10.dp),
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.W300,
+                                    color = colorResource(id = R.color.other_description_color)
+                                )
 
-                    }
-                }
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    BottomAppBar {
-
-                        Button(modifier = Modifier
-                            .width(120.dp)
-                            .height(70.dp), onClick = {
-
-                            val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
-                            val intentUri =
-                                Uri.parse("https://arvr.google.com/scene-viewer/1.0")
-                                    .buildUpon()
-                                    .appendQueryParameter(
-                                        "file",
-                                        "https://raw.githubusercontent.com/eif-courses/models/main/${museumItems[page].media}.glb"
-                                    ).build()
-                            sceneViewerIntent.data = intentUri
-                            sceneViewerIntent.setPackage("com.google.ar.core")
-                            context.startActivity(sceneViewerIntent)
-
-                        }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.viewmodel),
-                                contentDescription = null,
-                                tint = colorResource(id = R.color.black)
-                            )
+                            }
 
                         }
-                        Text(
-                            text = "Page ${page + 1}/${museumItems.size}",
-                            modifier = Modifier.padding(start = 30.dp),
-                            color = Color.Black
-                        )
-
                     }
+
+
                 }
+
 
             }
 
 
-        }
 
 
-    }
+
+
+
+
+
+        })
+
+
 }
 
 @ExperimentalPagerApi
