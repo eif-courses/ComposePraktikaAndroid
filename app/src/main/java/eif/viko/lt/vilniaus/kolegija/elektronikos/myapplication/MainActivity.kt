@@ -1,61 +1,51 @@
 package eif.viko.lt.vilniaus.kolegija.elektronikos.myapplication
 
 import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.media.AudioAttributes
+import android.media.MediaPlayer
 
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.calculateCurrentOffsetForPage
-import com.google.accompanist.pager.rememberPagerState
 import eif.viko.lt.vilniaus.kolegija.elektronikos.myapplication.ui.theme.MyApplicationTheme
-import kotlin.math.absoluteValue
-import androidx.core.content.ContextCompat.startActivity
+import com.google.accompanist.pager.*
 import com.google.gson.Gson
 import eif.viko.lt.vilniaus.kolegija.elektronikos.myapplication.model.Item
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import java.util.*
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
+import android.os.Build
 
 
 class MainActivity : ComponentActivity() {
-
 
     @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,56 +84,149 @@ class MainActivity : ComponentActivity() {
 //    }
 //}
 
-
 @ExperimentalPagerApi
 @Composable
 fun DisplayMuseumItems(museumItems: List<Item>) {
 
     val fabShape = CircleShape
     val scaffoldState = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = museumItems.size)
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val stateMedia = remember { mutableStateOf(true) }
+    val progresas = remember { mutableStateOf(0.0f) }
+
+    var (loadAudio, setLoadResult) = remember { mutableStateOf<MediaPlayer?>(null) }
+
+
+    progresas.value = 0.0f
+
+    val currentLocale = Locale.getDefault().toLanguageTag()
+
+    val locale: String = when {
+        currentLocale.contains("lt") -> {
+            "LT"
+        }
+        currentLocale.contains("ru") -> {
+            "RU"
+        }
+        currentLocale.contains("en") -> {
+            "EN"
+        }
+        else -> {
+            "EN"
+        }
+    }
 
     Scaffold(
         scaffoldState = scaffoldState,
         drawerContent = { Text("Drawer content") },
-        topBar = { },
+        topBar = {
+            val items = listOf(
+                ActionItemSpec("LT", Icons.Default.Phone, ActionItemMode.IF_ROOM) {
+
+
+                },
+                ActionItemSpec("EN", Icons.Default.PlayArrow, ActionItemMode.IF_ROOM) {
+                    Locale.setDefault(Locale("en_US"))
+                },
+                ActionItemSpec("RU", Icons.Default.Menu, ActionItemMode.IF_ROOM) {
+                    Locale.setDefault(Locale("ru_RU"))
+                },
+            )
+            TopAppBar(
+                title = {
+
+                    // PAVADINIMAS
+                    when (locale) {
+                        "LT" -> TitleText(title = museumItems[pagerState.currentPage].title_lt)
+                        "RU" -> TitleText(title = museumItems[pagerState.currentPage].title_ru)
+                        else -> TitleText(title = museumItems[pagerState.currentPage].title_en)
+                    }
+
+                },
+                actions = {
+                    ActionMenu(items, defaultIconSpace = 0)
+                }
+            )
+
+        },
         bottomBar = {
-            BottomAppBar(cutoutShape = fabShape, modifier = Modifier.height(100.dp), backgroundColor = colorResource(
-                id = R.color.white
-            )) {
-                Button(
+            BottomAppBar(
+                cutoutShape = fabShape,
+                modifier = Modifier.height(110.dp),
+                backgroundColor = colorResource(
+                    id = R.color.purple_500
+                )
+            ) {
+
+                IconButton(
                     modifier = Modifier
-                        .width(70.dp)
-                        .height(70.dp), onClick = {
+                        .padding(start = 20.dp, top = 30.dp)
+                        .size(50.dp),
+                    onClick = {
+                        stateMedia.value = !stateMedia.value
+                        val url =
+                            "https://raw.githubusercontent.com/eif-courses/audio/main/${locale}/${museumItems[pagerState.currentPage].media}.wav"
+                        if (loadAudio?.isPlaying == true) {
+                            loadAudio?.pause()
+                        }
+                        else if(loadAudio!=null) {
+                            loadAudio?.start()
+                        }else{
+                            val mediaPlayer = MediaPlayer().apply {
+                                setAudioAttributes(
+                                    AudioAttributes.Builder()
+                                        .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                                        .build()
+                                )
+                                setDataSource(url)
+                                prepareAsync() // might take long! (for buffering, etc)
+                            }
 
+                            mediaPlayer.setOnPreparedListener {
+                                loadAudio = it
+                                it.start()
+                            }
+                        }
+                    }
+                )
+                {
+                    if (stateMedia.value) {
+                        Icon(
+                            Icons.Filled.PlayArrow,
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            contentDescription = null,
+                            tint = colorResource(id = R.color.green)
+                        )
 
-                        // mediaPlayer.start()
-                        // https://raw.githubusercontent.com/eif-courses/modelsausdio/main/EN/acer_ak_anywhere_en.wav
+                    } else {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_baseline_pause_64),
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            contentDescription = null,
+                            tint = colorResource(id = R.color.green)
+                        )
 
-
-                    }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_baseline_play_arrow_64),
-                        contentDescription = null,
-                        tint = colorResource(id = R.color.purple_700)
-                    )
+                    }
 
                 }
 
                 LinearProgressIndicator(
                     backgroundColor = Color.White,
                     color = colorResource(id = R.color.purple_700),
-                    progress = 0.5f,
+                    progress = progresas.value,
                     modifier = Modifier
-                        .fillMaxWidth(0.7f)
-                        .padding(start = 20.dp)
+                        .fillMaxWidth(0.65f)
+                        .padding(start = 20.dp, top = 30.dp)
                 )
                 Text(
                     text = "0:25",
-                    modifier = Modifier.padding(start = 30.dp),
-                    color = Color.Black
+                    modifier = Modifier.padding(start = 56.dp, top = 30.dp),
+                    color = Color.White
                 )
             }
         },
@@ -152,6 +235,8 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
         floatingActionButton = {
             FloatingActionButton(
                 shape = fabShape,
+                modifier = Modifier
+                    .size(80.dp),
                 onClick = {
                     val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
                     val intentUri =
@@ -166,140 +251,123 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                     context.startActivity(sceneViewerIntent)
 
 
-
                 }
             ) {
-                Icon(painterResource(id = R.drawable.ic_baseline_360_50),"")
+                Icon(painterResource(id = R.drawable.ic_baseline_3d_rotation_64), "")
             }
         }, content = {
+            PageCard(pagerState, museumItems, locale, loadAudio)
+        })
+}
+
+
+@ExperimentalPagerApi
+@Composable
+fun PageCard(pagerState: PagerState, museumItems: List<Item>, locale: String, mediaPlayer: MediaPlayer?) {
+
+    val context = LocalContext.current
+
+    HorizontalPager(state = pagerState, itemSpacing = 10.dp) { page ->
+        // Our page content
+
+        //val url = "https://eif-muziejus.lt/audio_ru/oscilografas.wav"
 
 
 
-            // var progress by remember {  mutableStateOf(0.1f) }
-
-
-            val size = 64.dp
-
-            // Display 10 items
+               mediaPlayer?.stop()
 
 
 
 
-            HorizontalPager(state = pagerState, itemSpacing = 10.dp) { page ->
-                // Our page content
+        Card(
 
-                //val url = "https://eif-muziejus.lt/audio_ru/oscilografas.wav"
-                val url =
-                    "https://raw.githubusercontent.com/eif-courses/audio/main/EN/${museumItems[page].media}.wav"
-                ///"http://........" // your URL here
+            elevation = 4.dp, modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth()
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .padding(10.dp)
+                    .background(color = colorResource(id = R.color.color_soft_1))
+            ) {
 
-                println(url)
-
-
-//        val mediaPlayer: MediaPlayer = MediaPlayer().apply {
-//            setAudioAttributes(
-//                AudioAttributes.Builder()
-//                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-//                    .setUsage(AudioAttributes.USAGE_MEDIA)
-//                    .build()
-//            )
-//            setDataSource(url)
-//            prepare() // might take long! (for buffering, etc)
-//
-//        }
-
-                Card(
-
-                    elevation = 4.dp, modifier = Modifier
-                        .fillMaxHeight()
-                        .fillMaxWidth()
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
 
-
-
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .padding(10.dp)
-                    ) {
-
-
-                        Row(modifier = Modifier.fillMaxWidth()) {
-
-
-                            DisableSelection {
-                                Text(
-                                    museumItems[page].title_en,
-                                    maxLines = 20,
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier
-                                        .background(color = MaterialTheme.colors.primary)
-                                        .padding(10.dp)
-                                        .fillMaxWidth(),
-                                    fontSize = 20.sp, fontWeight = FontWeight.W300, color = colorResource(
-                                        id = R.color.purple_700
-                                    )
-                                )
-
-                            }
-                        }
-
-
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-
-                            Image(
-                                contentScale = ContentScale.Crop,
-                                painter = painterResource(
-                                    id = context.resources.getIdentifier(
-                                        museumItems[page].media, "drawable", context.packageName
-                                    )
-                                ),
-                                contentDescription = "3D",
-                                modifier = Modifier
-                                    .fillMaxWidth()
+                    Image(
+                        contentScale = ContentScale.Crop,
+                        painter = painterResource(
+                            id = context.resources.getIdentifier(
+                                museumItems[page].media, "drawable", context.packageName
                             )
-
-                        }
-
-                        Row() {
-                            DisableSelection {
-                                Text(
-                                    museumItems[page].description_en,
-                                    maxLines = 20,
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier
-                                        .background(color = colorResource(id = R.color.other_description_background))
-                                        .padding(10.dp),
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.W300,
-                                    color = colorResource(id = R.color.other_description_color)
-                                )
-
-                            }
-
-                        }
-                    }
-
-
+                        ),
+                        contentDescription = "3D",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(300.dp)
+                            .shadow(2.dp)
+                            .padding(10.dp)
+                    )
                 }
 
+                Row(
+                    modifier = Modifier
+                        .shadow(1.dp)
+                        .padding(10.dp)
+                ) {
+                    when (locale) {
+                        "LT" -> DescriptionTextArea(language = museumItems[page].description_lt)
+                        "RU" -> DescriptionTextArea(language = museumItems[page].description_ru)
+                        else -> DescriptionTextArea(language = museumItems[page].description_en)
+                    }
+                }
 
             }
 
+        }
 
-
-
-
-
-
-
-
-        })
-
-
+    }
 }
+
+
+@Composable
+fun TitleText(title: String) {
+    DisableSelection {
+        Text(
+            title,
+            maxLines = 3,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 10.dp),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            color = colorResource(
+                id = R.color.black
+            )
+        )
+    }
+}
+
+@Composable
+fun DescriptionTextArea(language: String) {
+    DisableSelection {
+        Text(
+            language,
+            maxLines = 20,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .background(color = colorResource(id = R.color.other_description_background))
+                .padding(10.dp),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.W300,
+            color = colorResource(id = R.color.other_description_color)
+        )
+    }
+}
+
 
 @ExperimentalPagerApi
 @Preview(showBackground = true)
@@ -313,4 +381,148 @@ fun DefaultPreview() {
     MyApplicationTheme {
         DisplayMuseumItems(items)
     }
+}
+
+
+data class ActionItemSpec(
+    val name: String,
+    val icon: ImageVector,
+    val visibility: ActionItemMode = ActionItemMode.IF_ROOM,
+    val onClick: () -> Unit,
+)
+
+// Whether to show the action item as an icon or not (or if room)
+enum class ActionItemMode {
+    ALWAYS_SHOW, IF_ROOM, NEVER_SHOW
+}
+
+@Composable
+fun ActionMenu(
+    items: List<ActionItemSpec>,
+    defaultIconSpace: Int = 3, // includes overflow menu
+    menuExpanded: MutableState<Boolean> = remember { mutableStateOf(false) }
+) {
+    // decide how many ifRoom icons to show as actions
+    val (actionItems, overflowItems) = remember(items, defaultIconSpace) {
+        separateIntoActionAndOverflow(items, defaultIconSpace)
+    }
+
+    for (item in actionItems) {
+        IconButton(onClick = item.onClick) {
+            Icon(item.icon, item.name)
+        }
+    }
+    if (overflowItems.isNotEmpty()) {
+        IconButton(onClick = { menuExpanded.value = true }) {
+
+            val currentLocale = Locale.getDefault().toLanguageTag()
+
+            when {
+                currentLocale.contains("lt") -> {
+                    Image(
+                        painter = painterResource(id = R.drawable.lt),
+                        contentDescription = "Choose language", modifier = Modifier.padding(5.dp)
+                    )
+                }
+                currentLocale.contains("ru") -> {
+                    Image(
+                        painter = painterResource(id = R.drawable.ru),
+                        contentDescription = "Choose language", modifier = Modifier.padding(5.dp)
+                    )
+                }
+                else -> {
+                    Image(
+                        painter = painterResource(id = R.drawable.en),
+                        contentDescription = "Choose language", modifier = Modifier.padding(5.dp)
+                    )
+                }
+
+            }
+        }
+        DropdownMenu(
+            expanded = menuExpanded.value,
+            onDismissRequest = { menuExpanded.value = false }
+        ) {
+            for (item in overflowItems) {
+                DropdownMenuItem(onClick = item.onClick) {
+                    //Icon(item.icon, item.name) just have text in the overflow menu
+
+
+                    val textpos = 5.dp
+
+                    when (item.name) {
+                        "LT" -> {
+                            Image(
+                                painter = painterResource(id = R.drawable.lt),
+                                contentDescription = item.name,
+                                modifier = Modifier.shadow(10.dp)
+                            )
+                            Text(modifier = Modifier.padding(start = textpos), text = "LT")
+                        }
+                        "EN" -> {
+                            Image(
+                                painter = painterResource(id = R.drawable.en),
+                                contentDescription = item.name
+                            )
+                            Text(modifier = Modifier.padding(start = textpos), text = "EN")
+                        }
+                        "RU" -> {
+                            Image(
+                                painter = painterResource(id = R.drawable.ru),
+                                contentDescription = item.name
+                            )
+                            Text(modifier = Modifier.padding(start = textpos), text = "RU")
+                        }
+                    }
+
+
+                    // Text(item.name)
+                }
+            }
+        }
+
+    }
+}
+
+private fun separateIntoActionAndOverflow(
+    items: List<ActionItemSpec>,
+    defaultIconSpace: Int
+): Pair<List<ActionItemSpec>, List<ActionItemSpec>> {
+    var (alwaysCount, neverCount, ifRoomCount) = Triple(0, 0, 0)
+    for (item in items) {
+        when (item.visibility) {
+            ActionItemMode.ALWAYS_SHOW -> alwaysCount++
+            ActionItemMode.NEVER_SHOW -> neverCount++
+            ActionItemMode.IF_ROOM -> ifRoomCount++
+        }
+    }
+
+    val needsOverflow = alwaysCount + ifRoomCount > defaultIconSpace || neverCount > 0
+    val actionIconSpace = defaultIconSpace - (if (needsOverflow) 1 else 0)
+
+    val actionItems = ArrayList<ActionItemSpec>()
+    val overflowItems = ArrayList<ActionItemSpec>()
+
+    var ifRoomsToDisplay = actionIconSpace - alwaysCount
+    for (item in items) {
+        when (item.visibility) {
+            ActionItemMode.ALWAYS_SHOW -> {
+                actionItems.add(item)
+            }
+            ActionItemMode.NEVER_SHOW -> {
+                overflowItems.add(item)
+            }
+            ActionItemMode.IF_ROOM -> {
+                if (ifRoomsToDisplay > 0) {
+                    actionItems.add(item)
+                    ifRoomsToDisplay--
+                } else {
+                    overflowItems.add(item)
+                }
+
+            }
+        }
+    }
+    return Pair(actionItems, overflowItems)
+
 }
