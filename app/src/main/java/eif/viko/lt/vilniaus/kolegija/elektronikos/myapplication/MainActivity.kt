@@ -1,14 +1,11 @@
 package eif.viko.lt.vilniaus.kolegija.elektronikos.myapplication
-
+import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -40,44 +37,75 @@ import com.google.gson.Gson
 import eif.viko.lt.vilniaus.kolegija.elektronikos.myapplication.model.Item
 import kotlinx.coroutines.*
 import java.util.*
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
-import android.os.Build
-import android.os.Handler
 import android.os.CountDownTimer
+import com.akexorcist.localizationactivity.core.LanguageSetting.setDefaultLanguage
+import com.akexorcist.localizationactivity.core.LanguageSetting.setLanguage
+import com.akexorcist.localizationactivity.core.LocalizationActivityDelegate
+import com.akexorcist.localizationactivity.core.OnLocaleChangedListener
+import com.akexorcist.localizationactivity.ui.LocalizationActivity
+
+class MainActivity : ComponentActivity(), OnLocaleChangedListener {
 
 
+    private val localizationDelegate = LocalizationActivityDelegate(this)
 
+    public override fun onResume() {
+        super.onResume()
+        localizationDelegate.onResume(this)
+    }
 
+    override fun attachBaseContext(newBase: Context) {
+        applyOverrideConfiguration(localizationDelegate.updateConfigurationLocale(newBase))
+        super.attachBaseContext(newBase)
+    }
 
-class MainActivity : ComponentActivity() {
+    override fun getApplicationContext(): Context {
+        return localizationDelegate.getApplicationContext(super.getApplicationContext())
+    }
 
+    override fun getResources(): Resources {
+        return localizationDelegate.getResources(super.getResources())
+    }
+
+    fun setLanguage(language: String?) {
+        localizationDelegate.setLanguage(this, language!!)
+    }
+
+    fun setLanguage(locale: Locale?) {
+        localizationDelegate.setLanguage(this, locale!!)
+    }
+
+    val currentLanguage: Locale
+        get() = localizationDelegate.getLanguage(this)
     @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
+        localizationDelegate.addOnLocaleChangedListener(this)
+        localizationDelegate.onCreate()
         super.onCreate(savedInstanceState)
+
 
         val gson = Gson()
         val text = resources.openRawResource(R.raw.items).bufferedReader().use { it.readText() }
         val items: List<Item> = gson.fromJson(text, Array<Item>::class.java).toList()
 
         setContent {
-
-            val context = LocalContext.current
-
-
             MyApplicationTheme {
                 DisplayMuseumItems(items)
             }
         }
 
     }
+
+    override fun onBeforeLocaleChanged(){}
+
+    override fun onAfterLocaleChanged() {}
 }
 
 
 //override fun playSound(item: Item) {
 //    val url = item.audio                ///"http://........" // your URL here
 //    val mediaPlayer: MediaPlayer? = MediaPlayer().apply {
-//        setAudioAttributes(
+//        setAudioAttributes(   1 Q
 //            AudioAttributes.Builder()
 //                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
 //                .setUsage(AudioAttributes.USAGE_MEDIA)
@@ -100,6 +128,9 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
     val coroutineScope = rememberCoroutineScope()
     val stateMedia = remember { mutableStateOf(true) }
     val progresas = remember { mutableStateOf(0.0f) }
+    val timeProgress = remember { mutableStateOf(0.0f) }
+    val currentLanguage = remember { mutableStateOf("en")}
+
 
     progresas.value = 0.0f
 
@@ -120,7 +151,8 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
         }
     }
 
-    val url= "https://raw.githubusercontent.com/eif-courses/audio/main/${locale}/${museumItems[pagerState.currentPage].media}.wav"
+    val url =
+        "https://raw.githubusercontent.com/eif-courses/audio/main/${locale}/${museumItems[pagerState.currentPage].media}.wav"
 
 
     var (loadAudio, setLoadResult) = remember { mutableStateOf<MediaPlayer?>(null) }
@@ -130,18 +162,25 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
     Scaffold(
         scaffoldState = scaffoldState,
-        drawerContent = { Text("Drawer content") },
         topBar = {
             val items = listOf(
                 ActionItemSpec("LT", Icons.Default.Phone, ActionItemMode.IF_ROOM) {
-
-                    Locale.setDefault(Locale("lt"))
-                },
-                ActionItemSpec("EN", Icons.Default.PlayArrow, ActionItemMode.IF_ROOM) {
-                    Locale.setDefault(Locale("en_US"))
+                    //Locale.setDefault(Locale("lt"))
+                    setLanguage(context.applicationContext, Locale("lt"))
+                    currentLanguage.value = "lt"
+                    //setDefaultLanguage(context.applicationContext, Locale("lt"))
                 },
                 ActionItemSpec("RU", Icons.Default.Menu, ActionItemMode.IF_ROOM) {
-                    Locale.setDefault(Locale("ru_RU"))
+                   // Locale.setDefault(Locale("ru"))
+                    setLanguage(context.applicationContext, Locale("ru"))
+                    currentLanguage.value = "ru"
+                    //setDefaultLanguage(context.applicationContext, Locale("ru"))
+                },
+                ActionItemSpec("EN", Icons.Default.PlayArrow, ActionItemMode.IF_ROOM) {
+                    //Locale.setDefault(Locale("en"))
+                    setLanguage(context.applicationContext, Locale("en"))
+                    currentLanguage.value = "en"
+                   // setDefaultLanguage(context.applicationContext, Locale("en"))
                 },
             )
             TopAppBar(
@@ -156,7 +195,7 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
                 },
                 actions = {
-                    ActionMenu(items, defaultIconSpace = 0)
+                    ActionMenu(items, currentLanguage.value, defaultIconSpace = 0)
                 }
             )
 
@@ -175,6 +214,8 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                         .padding(start = 20.dp, top = 30.dp)
                         .size(50.dp),
                     onClick = {
+
+                        progresas.value = 0.0f
                         stateMedia.value = !stateMedia.value
 
                         if (!stateMedia.value) {
@@ -192,26 +233,39 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
                             mediaPlayer.setOnPreparedListener {
                                 loadAudio = it
-                                val temp = it.duration.toLong()
+                                val temp: Float = 1.0f / (it.duration.toFloat() / 1000.0f)
+
+                                //progresas.value = 0.0f
 
 
-                                val waitTimer: CountDownTimer
-                                waitTimer = object : CountDownTimer(temp, 1000) {
-                                    override fun onTick(millisUntilFinished: Long) {
-                                        //called every 300 milliseconds, which could be used to
-                                        //send messages or some other action
-                                        progresas.value = (progresas.value+1/10.0f)
-                                        //progresas.value/= 10.0f
-                                    }
+                                //
 
-                                    override fun onFinish() {
-                                        //After 60000 milliseconds (60 sec) finish current
-                                        //if you would like to execute something when time finishes
-                                    }
-                                }.start()
+                                val waitTimer: CountDownTimer =
+                                    object : CountDownTimer(it.duration.toLong(), 1000) {
+                                        override fun onTick(millisUntilFinished: Long) {
+                                            //called every 300 milliseconds, which could be used to
+                                            //send messages or some other action
 
 
-                               // progresas.value = temp
+                                            println(temp)
+
+
+                                            progresas.value += (temp)
+                                            // progresas.value =
+                                            // progresas.value = count * 1.0f / (millisUntilFinished / 1000)
+
+                                            //progresas.value/= 10.0f
+                                        }
+
+                                        override fun onFinish() {
+                                            stateMedia.value = true
+                                            //progresas.value = 0.0f
+                                            //After 60000 milliseconds (60 sec) finish current
+                                            //if you would like to execute something when time finishes
+                                        }
+                                    }.start()
+
+                                // progresas.value = temp
                                 it.start()
                             }
 
@@ -231,15 +285,17 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                             contentDescription = null,
                             tint = colorResource(id = R.color.green)
                         )
+                        progresas.value = 0.0f
 
                     } else {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_baseline_pause_64),
+                            painter = painterResource(id = R.drawable.ic_baseline_stop_64),
                             modifier = Modifier
                                 .fillMaxSize(),
                             contentDescription = null,
                             tint = colorResource(id = R.color.green)
                         )
+
                     }
                 }
 
@@ -253,7 +309,7 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                 )
 
                 Text(
-                    text = progresas.value.toString(),
+                    text = (timeProgress.value).toString(),
                     modifier = Modifier.padding(start = 56.dp, top = 30.dp),
                     color = Color.White
                 )
@@ -292,7 +348,12 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
 @ExperimentalPagerApi
 @Composable
-fun PageCard(pagerState: PagerState, museumItems: List<Item>, locale: String, mediaPlayer: MediaPlayer?) {
+fun PageCard(
+    pagerState: PagerState,
+    museumItems: List<Item>,
+    locale: String,
+    mediaPlayer: MediaPlayer?
+) {
 
     val context = LocalContext.current
 
@@ -300,7 +361,6 @@ fun PageCard(pagerState: PagerState, museumItems: List<Item>, locale: String, me
         // Our page content
 
         //val url = "https://eif-muziejus.lt/audio_ru/oscilografas.wav"
-
 
 
         Card(
@@ -423,6 +483,7 @@ enum class ActionItemMode {
 @Composable
 fun ActionMenu(
     items: List<ActionItemSpec>,
+    lang:String,
     defaultIconSpace: Int = 3, // includes overflow menu
     menuExpanded: MutableState<Boolean> = remember { mutableStateOf(false) }
 ) {
@@ -439,16 +500,15 @@ fun ActionMenu(
     if (overflowItems.isNotEmpty()) {
         IconButton(onClick = { menuExpanded.value = true }) {
 
-            val currentLocale = Locale.getDefault().toLanguageTag()
 
-            when {
-                currentLocale.contains("lt") -> {
+            when(lang) {
+                "lt" -> {
                     Image(
                         painter = painterResource(id = R.drawable.lt),
                         contentDescription = "Choose language", modifier = Modifier.padding(5.dp)
                     )
                 }
-                currentLocale.contains("ru") -> {
+                "ru" -> {
                     Image(
                         painter = painterResource(id = R.drawable.ru),
                         contentDescription = "Choose language", modifier = Modifier.padding(5.dp)
@@ -475,6 +535,13 @@ fun ActionMenu(
                     val textpos = 5.dp
 
                     when (item.name) {
+                        "RU" -> {
+                            Image(
+                                painter = painterResource(id = R.drawable.ru),
+                                contentDescription = item.name
+                            )
+                            Text(modifier = Modifier.padding(start = textpos), text = "RU")
+                        }
                         "LT" -> {
                             Image(
                                 painter = painterResource(id = R.drawable.lt),
@@ -490,13 +557,7 @@ fun ActionMenu(
                             )
                             Text(modifier = Modifier.padding(start = textpos), text = "EN")
                         }
-                        "RU" -> {
-                            Image(
-                                painter = painterResource(id = R.drawable.ru),
-                                contentDescription = item.name
-                            )
-                            Text(modifier = Modifier.padding(start = textpos), text = "RU")
-                        }
+
                     }
 
 
