@@ -528,14 +528,12 @@ fun ActionMenu(
             onDismissRequest = { menuExpanded.value = false },
         ) {
             for (item in overflowItems) {
-                DropdownMenuItem(onClick = item.onClick) {
+                DropdownMenuItem(onClick = {
+                    menuExpanded.value = false
+                    item.onClick
+                }) {
                     //Icon(item.icon, item.name) just have text in the overflow menu
-
-
-
-
                     val textpos = 5.dp
-
                     when (item.name) {
                         "RU" -> {
                             Image(
@@ -562,9 +560,6 @@ fun ActionMenu(
                         }
 
                     }
-
-
-
 
 
                     // Text(item.name)
