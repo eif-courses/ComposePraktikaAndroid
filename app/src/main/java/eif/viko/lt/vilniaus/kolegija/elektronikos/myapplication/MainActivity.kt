@@ -43,6 +43,11 @@ import java.util.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import android.os.Build
+import android.os.Handler
+import android.os.CountDownTimer
+
+
+
 
 
 class MainActivity : ComponentActivity() {
@@ -96,9 +101,6 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
     val stateMedia = remember { mutableStateOf(true) }
     val progresas = remember { mutableStateOf(0.0f) }
 
-    var (loadAudio, setLoadResult) = remember { mutableStateOf<MediaPlayer?>(null) }
-
-
     progresas.value = 0.0f
 
     val currentLocale = Locale.getDefault().toLanguageTag()
@@ -118,6 +120,14 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
         }
     }
 
+    val url= "https://raw.githubusercontent.com/eif-courses/audio/main/${locale}/${museumItems[pagerState.currentPage].media}.wav"
+
+
+    var (loadAudio, setLoadResult) = remember { mutableStateOf<MediaPlayer?>(null) }
+
+
+
+
     Scaffold(
         scaffoldState = scaffoldState,
         drawerContent = { Text("Drawer content") },
@@ -125,7 +135,7 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
             val items = listOf(
                 ActionItemSpec("LT", Icons.Default.Phone, ActionItemMode.IF_ROOM) {
 
-
+                    Locale.setDefault(Locale("lt"))
                 },
                 ActionItemSpec("EN", Icons.Default.PlayArrow, ActionItemMode.IF_ROOM) {
                     Locale.setDefault(Locale("en_US"))
@@ -166,14 +176,9 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                         .size(50.dp),
                     onClick = {
                         stateMedia.value = !stateMedia.value
-                        val url =
-                            "https://raw.githubusercontent.com/eif-courses/audio/main/${locale}/${museumItems[pagerState.currentPage].media}.wav"
-                        if (loadAudio?.isPlaying == true) {
-                            loadAudio?.pause()
-                        }
-                        else if(loadAudio!=null) {
-                            loadAudio?.start()
-                        }else{
+
+                        if (!stateMedia.value) {
+
                             val mediaPlayer = MediaPlayer().apply {
                                 setAudioAttributes(
                                     AudioAttributes.Builder()
@@ -187,9 +192,34 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
                             mediaPlayer.setOnPreparedListener {
                                 loadAudio = it
+                                val temp = it.duration.toLong()
+
+
+                                val waitTimer: CountDownTimer
+                                waitTimer = object : CountDownTimer(temp, 1000) {
+                                    override fun onTick(millisUntilFinished: Long) {
+                                        //called every 300 milliseconds, which could be used to
+                                        //send messages or some other action
+                                        progresas.value = (progresas.value+1/10.0f)
+                                        //progresas.value/= 10.0f
+                                    }
+
+                                    override fun onFinish() {
+                                        //After 60000 milliseconds (60 sec) finish current
+                                        //if you would like to execute something when time finishes
+                                    }
+                                }.start()
+
+
+                               // progresas.value = temp
                                 it.start()
                             }
+
+                        } else {
+                            loadAudio?.release()
+                            loadAudio = null
                         }
+
                     }
                 )
                 {
@@ -210,9 +240,7 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                             contentDescription = null,
                             tint = colorResource(id = R.color.green)
                         )
-
                     }
-
                 }
 
                 LinearProgressIndicator(
@@ -223,8 +251,9 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                         .fillMaxWidth(0.65f)
                         .padding(start = 20.dp, top = 30.dp)
                 )
+
                 Text(
-                    text = "0:25",
+                    text = progresas.value.toString(),
                     modifier = Modifier.padding(start = 56.dp, top = 30.dp),
                     color = Color.White
                 )
@@ -271,11 +300,6 @@ fun PageCard(pagerState: PagerState, museumItems: List<Item>, locale: String, me
         // Our page content
 
         //val url = "https://eif-muziejus.lt/audio_ru/oscilografas.wav"
-
-
-
-               mediaPlayer?.stop()
-
 
 
 
