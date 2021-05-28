@@ -130,6 +130,9 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
     val progresas = remember { mutableStateOf(0.0f) }
     val timeProgress = remember { mutableStateOf(0.0f) }
     val currentLanguage = remember { mutableStateOf("en")}
+    val isPickedLanguage: MutableState<Boolean> = remember { mutableStateOf(false) }
+
+
 
 
     progresas.value = 0.0f
@@ -168,18 +171,21 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                     //Locale.setDefault(Locale("lt"))
                     setLanguage(context.applicationContext, Locale("lt"))
                     currentLanguage.value = "lt"
+                    isPickedLanguage.value = false
                     //setDefaultLanguage(context.applicationContext, Locale("lt"))
                 },
                 ActionItemSpec("RU", Icons.Default.Menu, ActionItemMode.IF_ROOM) {
                    // Locale.setDefault(Locale("ru"))
                     setLanguage(context.applicationContext, Locale("ru"))
                     currentLanguage.value = "ru"
+                    isPickedLanguage.value = false
                     //setDefaultLanguage(context.applicationContext, Locale("ru"))
                 },
                 ActionItemSpec("EN", Icons.Default.PlayArrow, ActionItemMode.IF_ROOM) {
                     //Locale.setDefault(Locale("en"))
                     setLanguage(context.applicationContext, Locale("en"))
                     currentLanguage.value = "en"
+                    isPickedLanguage.value = false
                    // setDefaultLanguage(context.applicationContext, Locale("en"))
                 },
             )
@@ -195,7 +201,7 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
                 },
                 actions = {
-                    ActionMenu(items, currentLanguage.value, defaultIconSpace = 0)
+                    ActionMenu(items, currentLanguage.value, defaultIconSpace = 0, menuExpanded = isPickedLanguage)
                 }
             )
 
@@ -205,7 +211,7 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                 cutoutShape = fabShape,
                 modifier = Modifier.height(110.dp),
                 backgroundColor = colorResource(
-                    id = R.color.purple_500
+                    id = R.color.purple_700
                 )
             ) {
 
@@ -249,7 +255,7 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
                                             println(temp)
 
-
+                                            timeProgress.value = millisUntilFinished.toFloat()/1000.0f
                                             progresas.value += (temp)
                                             // progresas.value =
                                             // progresas.value = count * 1.0f / (millisUntilFinished / 1000)
@@ -259,7 +265,8 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
                                         override fun onFinish() {
                                             stateMedia.value = true
-                                            //progresas.value = 0.0f
+                                            timeProgress.value = 0.0f
+                                        //progresas.value = 0.0f
                                             //After 60000 milliseconds (60 sec) finish current
                                             //if you would like to execute something when time finishes
                                         }
@@ -301,17 +308,18 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
                 LinearProgressIndicator(
                     backgroundColor = Color.White,
-                    color = colorResource(id = R.color.purple_700),
+                    color = colorResource(id = R.color.description_background),
                     progress = progresas.value,
                     modifier = Modifier
-                        .fillMaxWidth(0.65f)
+                        .fillMaxWidth(0.70f)
                         .padding(start = 20.dp, top = 30.dp)
                 )
 
                 Text(
-                    text = (timeProgress.value).toString(),
+                    text = "${timeProgress.value.toInt()}",
                     modifier = Modifier.padding(start = 56.dp, top = 30.dp),
-                    color = Color.White
+                    color = Color.White,
+                    fontSize = 20.sp
                 )
             }
         },
@@ -398,7 +406,7 @@ fun PageCard(
 
                 Row(
                     modifier = Modifier
-                        .shadow(1.dp)
+                        .shadow(2.dp)
                         .padding(10.dp)
                 ) {
                     when (locale) {
@@ -429,7 +437,7 @@ fun TitleText(title: String) {
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(
-                id = R.color.black
+                id = R.color.white
             )
         )
     }
@@ -437,17 +445,16 @@ fun TitleText(title: String) {
 
 @Composable
 fun DescriptionTextArea(language: String) {
+
     DisableSelection {
         Text(
             language,
             maxLines = 20,
             textAlign = TextAlign.Center,
             modifier = Modifier
-                .background(color = colorResource(id = R.color.other_description_background))
                 .padding(10.dp),
             fontSize = 16.sp,
-            fontWeight = FontWeight.W300,
-            color = colorResource(id = R.color.other_description_color)
+            fontWeight = FontWeight.W300
         )
     }
 }
@@ -527,18 +534,16 @@ fun ActionMenu(
             expanded = menuExpanded.value,
             onDismissRequest = { menuExpanded.value = false },
         ) {
-            for (item in overflowItems) {
-                DropdownMenuItem(onClick = {
-                    menuExpanded.value = false
-                    item.onClick
-                }) {
-                    //Icon(item.icon, item.name) just have text in the overflow menu
+
+
+            overflowItems.forEachIndexed { index, s ->
+                DropdownMenuItem(onClick = s.onClick) {
                     val textpos = 5.dp
-                    when (item.name) {
+                    when (s.name) {
                         "RU" -> {
                             Image(
                                 painter = painterResource(id = R.drawable.ru),
-                                contentDescription = item.name
+                                contentDescription = s.name
                             )
                             Text(modifier = Modifier.padding(start = textpos), text = "RU")
 
@@ -546,7 +551,7 @@ fun ActionMenu(
                         "LT" -> {
                             Image(
                                 painter = painterResource(id = R.drawable.lt),
-                                contentDescription = item.name,
+                                contentDescription = s.name,
                                 modifier = Modifier.shadow(10.dp)
                             )
                             Text(modifier = Modifier.padding(start = textpos), text = "LT")
@@ -554,17 +559,34 @@ fun ActionMenu(
                         "EN" -> {
                             Image(
                                 painter = painterResource(id = R.drawable.en),
-                                contentDescription = item.name
+                                contentDescription = s.name
                             )
                             Text(modifier = Modifier.padding(start = textpos), text = "EN")
                         }
 
                     }
 
-
-                    // Text(item.name)
                 }
             }
+
+
+
+
+
+
+
+
+//            for (item in overflowItems) {
+//                DropdownMenuItem(onClick = {
+//                    item.onClick
+//                }) {
+//                    //Icon(item.icon, item.name) just have text in the overflow menu
+
+//
+//
+//                    // Text(item.name)
+//                }
+//            }
         }
 
     }
