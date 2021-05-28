@@ -134,21 +134,21 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
 
     progresas.value = 0.0f
 
-    val currentLocale = Locale.getDefault().toLanguageTag()
+   // val currentLocale = Locale.getDefault().toLanguageTag()
 
-    val locale: String = when {
-        currentLocale.contains("lt") -> {
+    val locale: String = when(currentLanguage.value) {
+        "lt" -> {
             "LT"
         }
-        currentLocale.contains("ru") -> {
+        "ru" -> {
             "RU"
         }
-        currentLocale.contains("en") -> {
+        "en" -> {
+            "EN"
+        }else ->{
             "EN"
         }
-        else -> {
-            "EN"
-        }
+
     }
 
     val url =
@@ -525,11 +525,13 @@ fun ActionMenu(
         }
         DropdownMenu(
             expanded = menuExpanded.value,
-            onDismissRequest = { menuExpanded.value = false }
+            onDismissRequest = { menuExpanded.value = false },
         ) {
             for (item in overflowItems) {
                 DropdownMenuItem(onClick = item.onClick) {
                     //Icon(item.icon, item.name) just have text in the overflow menu
+
+
 
 
                     val textpos = 5.dp
@@ -541,6 +543,7 @@ fun ActionMenu(
                                 contentDescription = item.name
                             )
                             Text(modifier = Modifier.padding(start = textpos), text = "RU")
+
                         }
                         "LT" -> {
                             Image(
@@ -559,6 +562,9 @@ fun ActionMenu(
                         }
 
                     }
+
+
+
 
 
                     // Text(item.name)
