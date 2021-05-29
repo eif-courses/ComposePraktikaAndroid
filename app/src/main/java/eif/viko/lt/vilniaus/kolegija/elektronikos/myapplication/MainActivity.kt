@@ -131,6 +131,7 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
     val timeProgress = remember { mutableStateOf(0.0f) }
     val currentLanguage = remember { mutableStateOf("en")}
     val isPickedLanguage: MutableState<Boolean> = remember { mutableStateOf(false) }
+    val disableButton = remember { mutableStateOf(true)}
 
 
 
@@ -224,6 +225,9 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                         progresas.value = 0.0f
                         stateMedia.value = !stateMedia.value
 
+                        disableButton.value = false
+
+
                         if (!stateMedia.value) {
 
                             val mediaPlayer = MediaPlayer().apply {
@@ -266,6 +270,7 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                                         override fun onFinish() {
                                             stateMedia.value = true
                                             timeProgress.value = 0.0f
+                                            disableButton.value = true
                                         //progresas.value = 0.0f
                                             //After 60000 milliseconds (60 sec) finish current
                                             //if you would like to execute something when time finishes
@@ -281,7 +286,8 @@ fun DisplayMuseumItems(museumItems: List<Item>) {
                             loadAudio = null
                         }
 
-                    }
+                    },
+                    enabled = disableButton.value
                 )
                 {
                     if (stateMedia.value) {
